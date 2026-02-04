@@ -4,9 +4,9 @@ import { Tab, Tabs } from "../components/Tab";
 
 figma.connect(Tabs, "<FIGMA_TABS_CONTAINER>", {
   props: {
-    tabs: figma.children("Tab") as any,
+    tabs: figma.children("Tab"),
   },
-  example: ({ tabs }) => <Tabs tabs={tabs as any} />,
+  example: (props) => <Tabs {...(props as any)} />,
 });
 
 figma.connect(Tab, "<FIGMA_TAB_ELEMENT>", {
