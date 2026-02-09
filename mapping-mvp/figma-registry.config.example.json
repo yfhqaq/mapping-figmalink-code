@@ -1,0 +1,16 @@
+{
+  "defaultToken": "your-figma-api-token-here",
+  "defaultFigmaUrl": "https://www.figma.com/design/...",
+  "presets": {
+    "sds-time-picker": {
+      "name": "SDS 时间选择器",
+      "figmaUrl": "https://www.figma.com/design/JU4Freq42yQFn1GTe97pLy/SDS-%E9%80%9A%E7%94%A8-UI-%E7%BB%84%E4%BB%B6%E5%BA%93-v4.0.0?node-id=16649-28156&t=8QnOLWtLj3QgC0SC-4",
+      "description": "SDS 组件库 - 时间选择器页面"
+    },
+    "sds-button": {
+      "name": "SDS 按钮组件",
+      "figmaUrl": "https://www.figma.com/design/JU4Freq42yQFn1GTe97pLy/SDS-%E9%80%9A%E7%94%A8-UI-%E7%BB%84%E4%BB%B6%E5%BA%93-v4.0.0?node-id=16586-179850",
+      "description": "SDS 组件库 - 按钮组件集合"
+    }
+  }
+}

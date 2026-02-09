@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "fields": {
+    "component": "前端组件名。",
+    "figmaNode": "Figma 节点链接（指向组件实例或组件集）。",
+    "label": "Code Connect 标签（如 React）。",
+    "language": "代码语言（typescript/…）。",
+    "imports": "生成代码需要的 import 列表。",
+    "props": "组件 props 的映射描述。",
+    "props[].name": "props 名称。",
+    "props[].kind": "映射类型（enum/boolean/string/children/literal）。",
+    "props[].figmaPropName": "Figma 侧的属性名。",
+    "props[].valueMapping": "Figma 变体值到代码值的映射表。",
+    "props[].layers": "children 映射时的子层名称数组。",
+    "businessMappings": "业务代码映射（在组件映射之后进行的二次增强）。",
+    "businessMappings[].scope": "业务代码插入的使用场景，如 Table.columns。",
+    "businessMappings[].description": "场景描述（人类可读）。",
+    "businessMappings[].mappingType": "映射类型（snippet/component/description）。",
+    "businessMappings[].uxComponent": "对应的 UX 组件引用（用于业务映射与 UX 组件关联）。",
+    "businessMappings[].snippetTemplate": "业务代码片段模板。",
+    "businessMappings[].figmaNode": "对应的 Figma 节点链接。"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schema": {
+    "version": "1.0.0",
+    "description": "组件注册表数据结构说明",
+    "fields": {
+      "componentSetId": "组件集合的唯一标识符（Figma componentSetId），如果组件不属于任何集合则为 null",
+      "componentSetName": "组件集合的名称（Figma 中的名称）",
+      "componentSetDescription": "组件集合的描述，说明这是什么类型的组件集合",
+      "fileKey": "Figma 文件 Key（用于构建链接）",
+      "discoveredAt": "首次发现时间（ISO 8601 格式）",
+      "lastUpdatedAt": "最后更新时间（ISO 8601 格式）",
+      "discoveredFrom.figmaUrl": "发现该组件集合的 Figma 页面链接",
+      "discoveredFrom.nodeId": "发现该组件集合的页面节点 ID",
+      "components": "组件列表数组",
+      "components[].componentId": "组件的唯一标识符（Figma componentId）",
+      "components[].componentName": "组件的名称（Figma 中的名称）",
+      "components[].figmaLink": "组件的 Figma 链接（可直接访问）",
+      "components[].mapped": "是否已映射（boolean）",
+      "components[].mappingFile": "映射文件路径（如果已映射）",
+      "components[].frontendComponent": "前端组件名称（如果已映射）",
+      "components[].firstSeenAt": "首次发现时间（ISO 8601 格式）",
+      "components[].lastSeenAt": "最后发现时间（ISO 8601 格式）",
+      "components[].usageCount": "使用次数（在发现的页面中出现次数）"
+    }
+  },
+  "componentSetId": null,
+  "componentSetName": ".辅助说明",
+  "componentSetDescription": ".辅助说明 组件集合",
+  "fileKey": "JU4Freq42yQFn1GTe97pLy",
+  "discoveredAt": "2026-02-09T16:46:22.101Z",
+  "lastUpdatedAt": "2026-02-09T16:56:03.539Z",
+  "discoveredFrom": {
+    "figmaUrl": "https://www.figma.com/design/JU4Freq42yQFn1GTe97pLy/SDS-%E9%80%9A%E7%94%A8-UI-%E7%BB%84%E4%BB%B6%E5%BA%93-v4.0.0?node-id=16649-28156&t=8QnOLWtLj3QgC0SC-4",
+    "nodeId": "16649-28156"
+  },
+  "components": [
+    {
+      "componentId": "16595:182171",
+      "componentName": ".辅助说明",
+      "figmaLink": "https://www.figma.com/design/JU4Freq42yQFn1GTe97pLy/SDS-%E9%80%9A%E7%94%A8-UI-%E7%BB%84%E4%BB%B6%E5%BA%93-v4.0.0?node-id=16595-182171",
+      "mapped": false,
+      "firstSeenAt": "2026-02-09T16:46:22.101Z",
+      "lastSeenAt": "2026-02-09T16:56:03.539Z",
+      "usageCount": 3
+    }
+  ]
+}
