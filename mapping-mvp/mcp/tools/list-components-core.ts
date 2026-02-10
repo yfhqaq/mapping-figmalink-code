@@ -35,28 +35,35 @@ type ComponentRow = {
   count: number
 }
 
-function collectInstances(node: FigmaNode | undefined, acc: FigmaNode[]) {
+function collectInstances(
+  node: FigmaNode | undefined,
+  acc: FigmaNode[],
+  includeNestedInstances: boolean,
+) {
   if (!node) return
   if (node.type === "INSTANCE") {
     acc.push(node)
+    if (!includeNestedInstances) {
+      return
+    }
   }
   if (node.children && Array.isArray(node.children)) {
-    node.children.forEach((child) => collectInstances(child, acc))
+    node.children.forEach((child) => collectInstances(child, acc, includeNestedInstances))
   }
 }
 
-function collectAllInstances(data: InputData): FigmaNode[] {
+function collectAllInstances(data: InputData, includeNestedInstances: boolean): FigmaNode[] {
   const acc: FigmaNode[] = []
   if (data.document) {
-    collectInstances(data.document, acc)
+    collectInstances(data.document, acc, includeNestedInstances)
   }
   if (data.nodes) {
     if (Array.isArray(data.nodes)) {
-      data.nodes.forEach((node) => collectInstances(node, acc))
+      data.nodes.forEach((node) => collectInstances(node, acc, includeNestedInstances))
     } else {
       Object.values(data.nodes).forEach((nodeWrapper) => {
         if (nodeWrapper?.document) {
-          collectInstances(nodeWrapper.document, acc)
+          collectInstances(nodeWrapper.document, acc, includeNestedInstances)
         }
       })
     }
@@ -90,8 +97,13 @@ function buildComponentMaps(data: InputData) {
   return { componentNameById, componentSetNameById, componentSetIdByComponentId }
 }
 
-export function listComponentsFromFigmaData(figmaData: InputData) {
-  const instances = collectAllInstances(figmaData)
+export type ListComponentsOptions = {
+  includeNestedInstances?: boolean
+}
+
+export function listComponentsFromFigmaData(figmaData: InputData, options?: ListComponentsOptions) {
+  const includeNestedInstances = options?.includeNestedInstances ?? true
+  const instances = collectAllInstances(figmaData, includeNestedInstances)
   const { componentNameById, componentSetNameById, componentSetIdByComponentId } =
     buildComponentMaps(figmaData)
 

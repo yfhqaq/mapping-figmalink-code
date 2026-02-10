@@ -28,7 +28,7 @@
   "componentSetDescription": "说明型组件集合，包含各种说明性文本和图标组件",
   "fileKey": "JU4Freq42yQFn1GTe97pLy",
   "discoveredAt": "2026-02-09T16:46:22.101Z",
-  "lastUpdatedAt": "2026-02-09T16:56:03.539Z",
+  "lastUpdatedAt": "2026-02-10T03:07:10.194Z",
   "discoveredFrom": {
     "figmaUrl": "https://www.figma.com/design/JU4Freq42yQFn1GTe97pLy/SDS-%E9%80%9A%E7%94%A8-UI-%E7%BB%84%E4%BB%B6%E5%BA%93-v4.0.0?node-id=16649-28156&t=8QnOLWtLj3QgC0SC-4",
     "nodeId": "16649-28156"
@@ -40,7 +40,7 @@
       "figmaLink": "https://www.figma.com/design/JU4Freq42yQFn1GTe97pLy/SDS-%E9%80%9A%E7%94%A8-UI-%E7%BB%84%E4%BB%B6%E5%BA%93-v4.0.0?node-id=26451-23304",
       "mapped": false,
       "firstSeenAt": "2026-02-09T16:46:22.101Z",
-      "lastSeenAt": "2026-02-09T16:56:03.539Z",
+      "lastSeenAt": "2026-02-10T03:07:10.194Z",
       "usageCount": 15
     },
     {
@@ -49,8 +49,17 @@
       "figmaLink": "https://www.figma.com/design/JU4Freq42yQFn1GTe97pLy/SDS-%E9%80%9A%E7%94%A8-UI-%E7%BB%84%E4%BB%B6%E5%BA%93-v4.0.0?node-id=26451-23010",
       "mapped": false,
       "firstSeenAt": "2026-02-09T16:46:22.101Z",
-      "lastSeenAt": "2026-02-09T16:56:03.539Z",
+      "lastSeenAt": "2026-02-10T03:07:10.194Z",
       "usageCount": 6
+    },
+    {
+      "componentId": "26451:22956",
+      "componentName": "说明型/calendar",
+      "figmaLink": "https://www.figma.com/design/JU4Freq42yQFn1GTe97pLy/SDS-%E9%80%9A%E7%94%A8-UI-%E7%BB%84%E4%BB%B6%E5%BA%93-v4.0.0?node-id=26451-22956",
+      "mapped": false,
+      "firstSeenAt": "2026-02-10T02:31:42.252Z",
+      "lastSeenAt": "2026-02-10T02:31:42.252Z",
+      "usageCount": 15
     }
   ]
 }

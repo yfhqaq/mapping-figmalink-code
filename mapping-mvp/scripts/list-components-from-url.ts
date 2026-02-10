@@ -31,6 +31,7 @@ type FigmaApiComponentSetsResponse = {
 
 function parseArgs(): Args {
   const args = process.argv.slice(2)
+  const topLevelOnly = args.includes("--topLevelOnly")
   const result: Args = {}
   for (let i = 0; i < args.length; i += 1) {
     const key = args[i]
@@ -151,7 +152,9 @@ async function main() {
   }
 
   // 输出：组件ID + UX 名称 + 使用次数
-  const result = listComponentsFromFigmaData(figmaData)
+  const result = listComponentsFromFigmaData(figmaData, {
+    includeNestedInstances: !topLevelOnly,
+  })
   console.log(JSON.stringify(result, null, 2))
 }
 

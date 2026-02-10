@@ -3,6 +3,11 @@ declare module "node:fs" {
   export = fs
 }
 
+declare module "node:https" {
+  const https: any
+  export = https
+}
+
 declare module "node:path" {
   const path: any
   export = path

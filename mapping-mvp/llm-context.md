@@ -5,28 +5,6 @@ Source of truth is in `src/figma/*.figma.tsx`.
 
 ## Components
 
-### Table
-- Code component: `Table` (`src/components/Table.tsx`)
-- Mapping file: `src/figma/Table.figma.tsx`
-- Figma URL placeholder: `<FIGMA_TABLE_COMPONENT>`
-- Key props:
-  - `size`: enum `Small | Middle | Large` → `small | middle | large`
-  - `bordered`: boolean
-  - `pagination`: boolean
-  - `loading`: boolean
-  - `emptyText`: string
-
-### Upload
-- Code component: `Upload` (`src/components/Upload.tsx`)
-- Mapping file: `src/figma/Upload.figma.tsx`
-- Figma URL placeholder: `<FIGMA_UPLOAD_COMPONENT>`
-- Key props:
-  - `size`: enum `Small | Middle | Large` → `small | middle | large`
-  - `disabled`: boolean
-  - `multiple`: boolean
-  - `accept`: string
-  - `label`: string
-
 ### Tabs
 - Code component: `Tabs` (`src/components/Tab.tsx`)
 - Mapping file: `src/figma/Tab.figma.tsx`
@@ -42,28 +20,6 @@ Source of truth is in `src/figma/*.figma.tsx`.
   - `label`: string
   - `selected`: enum `Yes | No` → `true | false`
   - `variant`: enum `常规 Tab` → `regular`
-
-### Sidebar Navigation
-- Code component: `SidebarNav` (`src/components/SidebarNav.tsx`)
-- Mapping file: `src/figma/SidebarNav.figma.tsx`
-- Figma URL placeholder: `<FIGMA_SIDEBAR_NAV>`
-- Key props:
-  - `app`: enum `Gmesh | SEVC | CRM | CSM | Developer`
-  - `secondLevelExpanded`: enum `on | off` → `true | false`
-  - `firstSecondExpanded`: enum `on | off` → `true | false`
-
-### Sidebar Items (Level 1/2/3)
-- Code component: `SidebarNavItem` (`src/components/SidebarNav.tsx`)
-- Mapping file: `src/figma/SidebarNav.figma.tsx`
-- Figma URL placeholders:
-  - `<FIGMA_SIDEBAR_LEVEL1_COLLAPSED>`
-  - `<FIGMA_SIDEBAR_LEVEL1_EXPANDED>`
-  - `<FIGMA_SIDEBAR_LEVEL2>`
-  - `<FIGMA_SIDEBAR_LEVEL3>`
-- Key props:
-  - `level`: `level1 | level2 | level3`
-  - `selected`: enum `on | off` → `true | false`
-  - `expanded`: enum `on | off` → `true | false`
 
 ### Button
 - Code component: `Button` (`src/components/Button.tsx`)

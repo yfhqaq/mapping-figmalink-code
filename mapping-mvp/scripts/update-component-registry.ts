@@ -23,6 +23,7 @@ const registryDir = path.join(projectRoot, "data", "component-registry")
 const schemaDocPath = path.join(projectRoot, "docs", "component-registry-schema.md")
 const mappingJsonPath = path.join(projectRoot, "mapping-llm.json")
 const configPath = path.join(projectRoot, "figma-registry.config.json")
+const envPath = path.join(projectRoot, "data", ".env")
 
 type RegistryConfig = {
   defaultToken?: string
@@ -43,6 +44,36 @@ function loadConfig(): RegistryConfig {
   } catch {
     return {}
   }
+}
+
+function loadEnvFile() {
+  if (!fs.existsSync(envPath)) {
+    return
+  }
+  const content = fs.readFileSync(envPath, "utf8")
+  content.split("\n").forEach((line: string) => {
+    const trimmed = line.trim()
+    if (!trimmed || trimmed.startsWith("#")) {
+      return
+    }
+    const index = trimmed.indexOf("=")
+    if (index <= 0) {
+      return
+    }
+    const key = trimmed.slice(0, index).trim()
+    const value = trimmed.slice(index + 1).trim()
+    if (key && value && !process.env[key]) {
+      process.env[key] = value
+    }
+  })
+}
+
+function parseFigmaUrls(raw?: string): string[] {
+  if (!raw) return []
+  return raw
+    .split(/[\n,]+/)
+    .map((item) => item.trim())
+    .filter(Boolean)
 }
 
 // 确保注册表目录存在
@@ -279,7 +310,9 @@ async function fetchComponentsFromFigma(figmaUrl: string, token: string): Promis
     componentSets,
   }
 
-  const result = listComponentsFromFigmaData(figmaData)
+  const result = listComponentsFromFigmaData(figmaData, {
+    includeNestedInstances: process.env.FIGMA_TOP_LEVEL_ONLY !== "1",
+  })
   
   // 获取组件集合信息
   const componentSetMap = new Map<string, string>()
@@ -289,7 +322,11 @@ async function fetchComponentsFromFigma(figmaUrl: string, token: string): Promis
     }
   })
   
-  return result.components.map((comp) => {
+  return result.components
+    .filter((comp): comp is { componentId: string; componentName: string; count: number } =>
+      Boolean(comp.componentId && comp.componentName),
+    )
+    .map((comp) => {
     const normalizedId = normalizeNodeId(comp.componentId)
     const componentSetId = componentSetMap.get(normalizedId) || componentSetMap.get(comp.componentId)
     return {
@@ -344,15 +381,111 @@ function createSchema(): ComponentRegistry["schema"] {
   }
 }
 
+async function updateRegistryForUrl(figmaUrl: string, token: string) {
+  console.log(`\n处理 Figma URL: ${figmaUrl}`)
+  console.log("正在获取组件列表...")
+  const components = await fetchComponentsFromFigma(figmaUrl, token)
+  console.log(`找到 ${components.length} 个唯一组件`)
+
+  console.log("正在检查映射状态...")
+  const mapped = readMappedComponents()
+
+  const fileKey = extractFileKey(figmaUrl)!
+  const nodeId = extractNodeId(figmaUrl)!
+  const now = new Date().toISOString()
+
+  // 按组件集合分组
+  const componentSetMap = new Map<string, ComponentInfo[]>()
+  components.forEach((comp) => {
+    const key = getComponentSetKey(comp)
+    const list = componentSetMap.get(key) || []
+    list.push(comp)
+    componentSetMap.set(key, list)
+  })
+
+  console.log(`发现 ${componentSetMap.size} 个组件集合`)
+
+  // 处理每个组件集合
+  for (const [setKey, setComponents] of componentSetMap) {
+    const fileName = sanitizeFileName(setKey) + ".json"
+    const filePath = path.join(registryDir, fileName)
+
+    let registry = loadRegistry(filePath)
+
+    if (!registry) {
+      // 创建新的注册表
+      const firstComponent = setComponents[0]
+      registry = {
+        schema: createSchema(),
+        componentSetId: firstComponent.componentSetId || null,
+        componentSetName: setKey,
+        componentSetDescription: getComponentSetDescription(setKey, setComponents),
+        fileKey,
+        discoveredAt: now,
+        lastUpdatedAt: now,
+        discoveredFrom: {
+          figmaUrl,
+          nodeId,
+        },
+        components: [],
+      }
+      console.log(`创建新组件集合: ${setKey}`)
+    } else {
+      // 更新现有注册表
+      registry.lastUpdatedAt = now
+      console.log(`更新组件集合: ${setKey}`)
+    }
+
+    // 更新组件列表
+    setComponents.forEach((comp) => {
+      const normalizedId = normalizeNodeId(comp.componentId)
+      const mappedInfo = mapped.get(normalizedId) || mapped.get(comp.componentId)
+      const existingIndex = registry.components.findIndex(
+        (c) => normalizeNodeId(c.componentId) === normalizedId || c.componentId === comp.componentId
+      )
+
+      const componentData = {
+        componentId: comp.componentId,
+        componentName: comp.componentName,
+        figmaLink: comp.figmaLink,
+        mapped: !!mappedInfo,
+        mappingFile: mappedInfo?.mappingFile,
+        frontendComponent: mappedInfo?.frontendComponent,
+        firstSeenAt: existingIndex >= 0 ? registry.components[existingIndex].firstSeenAt : now,
+        lastSeenAt: now,
+        usageCount: comp.count,
+      }
+
+      if (existingIndex >= 0) {
+        // 更新现有组件（保留首次发现时间，更新其他信息）
+        registry.components[existingIndex] = {
+          ...registry.components[existingIndex],
+          ...componentData,
+          firstSeenAt: registry.components[existingIndex].firstSeenAt, // 保留首次发现时间
+          usageCount: Math.max(registry.components[existingIndex].usageCount, comp.count), // 取最大值
+        }
+      } else {
+        // 添加新组件
+        registry.components.push(componentData)
+      }
+    })
+
+    // 保存注册表
+    saveRegistry(filePath, registry)
+    console.log(`  ✅ 已保存: ${fileName} (${registry.components.length} 个组件)`)
+  }
+}
+
 async function main() {
+  loadEnvFile()
   const args = process.argv.slice(2)
   const config = loadConfig()
-  
+
   // 解析命令行参数
   let figmaUrl: string | undefined
   let token: string | undefined
   let presetName: string | undefined
-  
+
   for (let i = 0; i < args.length; i++) {
     const arg = args[i]
     if (arg === "--figmaUrl" && args[i + 1]) {
@@ -383,7 +516,7 @@ async function main() {
       process.exit(0)
     }
   }
-  
+
   // 如果指定了预设，从预设中获取 figmaUrl
   if (presetName && config.presets?.[presetName]) {
     figmaUrl = config.presets[presetName].figmaUrl
@@ -393,28 +526,31 @@ async function main() {
     console.error("使用 --list-presets 查看所有可用预设")
     process.exit(1)
   }
-  
+
   // 如果没有提供 figmaUrl，尝试使用默认值
   if (!figmaUrl) {
-    figmaUrl = config.defaultFigmaUrl
+    figmaUrl = config.defaultFigmaUrl || process.env.FIGMA_URL
   }
-  
+
   // 如果没有提供 token，尝试从配置、环境变量获取
   if (!token) {
     token = config.defaultToken || process.env.FIGMA_API_KEY || process.env.FIGMA_TOKEN
   }
-  
+
+  const urlList = figmaUrl ? [figmaUrl] : parseFigmaUrls(process.env.FIGMA_URLS)
+
   // 验证必需参数
-  if (!figmaUrl) {
+  if (!urlList.length) {
     console.error("错误: 未提供 Figma URL")
     console.error("\n使用方法：")
     console.error("  1. 使用预设: npm run mapping:update-registry -- --preset <preset-name>")
     console.error("  2. 直接指定: npm run mapping:update-registry -- --figmaUrl <url>")
-    console.error("  3. 查看预设: npm run mapping:update-registry -- --list-presets")
+    console.error("  3. 通过环境变量: FIGMA_URLS")
+    console.error("  4. 查看预设: npm run mapping:update-registry -- --list-presets")
     console.error("\n也可以在 figma-registry.config.json 中设置 defaultFigmaUrl")
     process.exit(1)
   }
-  
+
   if (!token) {
     console.error("错误: 未提供 Figma API Token")
     console.error("\n可以通过以下方式提供：")
@@ -423,99 +559,11 @@ async function main() {
     console.error("  3. 环境变量: FIGMA_API_KEY 或 FIGMA_TOKEN")
     process.exit(1)
   }
-  
-  console.log("正在获取组件列表...")
-  const components = await fetchComponentsFromFigma(figmaUrl, token)
-  console.log(`找到 ${components.length} 个唯一组件`)
-  
-  console.log("正在检查映射状态...")
-  const mapped = readMappedComponents()
-  
-  const fileKey = extractFileKey(figmaUrl)!
-  const nodeId = extractNodeId(figmaUrl)!
-  const now = new Date().toISOString()
-  
-  // 按组件集合分组
-  const componentSetMap = new Map<string, ComponentInfo[]>()
-  components.forEach((comp) => {
-    const key = getComponentSetKey(comp)
-    const list = componentSetMap.get(key) || []
-    list.push(comp)
-    componentSetMap.set(key, list)
-  })
-  
-  console.log(`发现 ${componentSetMap.size} 个组件集合`)
-  
-  // 处理每个组件集合
-  for (const [setKey, setComponents] of componentSetMap) {
-    const fileName = sanitizeFileName(setKey) + ".json"
-    const filePath = path.join(registryDir, fileName)
-    
-    let registry = loadRegistry(filePath)
-    
-    if (!registry) {
-      // 创建新的注册表
-      const firstComponent = setComponents[0]
-      registry = {
-        schema: createSchema(),
-        componentSetId: firstComponent.componentSetId || null,
-        componentSetName: setKey,
-        componentSetDescription: getComponentSetDescription(setKey, setComponents),
-        fileKey,
-        discoveredAt: now,
-        lastUpdatedAt: now,
-        discoveredFrom: {
-          figmaUrl,
-          nodeId,
-        },
-        components: [],
-      }
-      console.log(`创建新组件集合: ${setKey}`)
-    } else {
-      // 更新现有注册表
-      registry.lastUpdatedAt = now
-      console.log(`更新组件集合: ${setKey}`)
-    }
-    
-    // 更新组件列表
-    setComponents.forEach((comp) => {
-      const normalizedId = normalizeNodeId(comp.componentId)
-      const mappedInfo = mapped.get(normalizedId) || mapped.get(comp.componentId)
-      const existingIndex = registry.components.findIndex(
-        (c) => normalizeNodeId(c.componentId) === normalizedId || c.componentId === comp.componentId
-      )
-      
-      const componentData = {
-        componentId: comp.componentId,
-        componentName: comp.componentName,
-        figmaLink: comp.figmaLink,
-        mapped: !!mappedInfo,
-        mappingFile: mappedInfo?.mappingFile,
-        frontendComponent: mappedInfo?.frontendComponent,
-        firstSeenAt: existingIndex >= 0 ? registry.components[existingIndex].firstSeenAt : now,
-        lastSeenAt: now,
-        usageCount: comp.count,
-      }
-      
-      if (existingIndex >= 0) {
-        // 更新现有组件（保留首次发现时间，更新其他信息）
-        registry.components[existingIndex] = {
-          ...registry.components[existingIndex],
-          ...componentData,
-          firstSeenAt: registry.components[existingIndex].firstSeenAt, // 保留首次发现时间
-          usageCount: Math.max(registry.components[existingIndex].usageCount, comp.count), // 取最大值
-        }
-      } else {
-        // 添加新组件
-        registry.components.push(componentData)
-      }
-    })
-    
-    // 保存注册表
-    saveRegistry(filePath, registry)
-    console.log(`  ✅ 已保存: ${fileName} (${registry.components.length} 个组件)`)
+
+  for (const url of urlList) {
+    await updateRegistryForUrl(url, token)
   }
-  
+
   console.log(`\n✅ 所有组件集合已更新到: ${registryDir}`)
 }
 

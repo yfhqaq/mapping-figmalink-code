@@ -21,6 +21,7 @@ const __dirname = path.dirname(__filename)
 const projectRoot = path.resolve(__dirname, "..")
 const statusDocPath = path.join(projectRoot, "docs", "component-mapping-status.md")
 const mappingJsonPath = path.join(projectRoot, "mapping-llm.json")
+const envPath = path.join(projectRoot, "data", ".env")
 
 type FigmaApiNodesResponse = {
   nodes?: Record<string, { document?: InputData["document"] }>
@@ -88,6 +89,36 @@ function fetchJson(url: string, token: string) {
     req.on("error", reject)
     req.end()
   })
+}
+
+function loadEnvFile() {
+  if (!fs.existsSync(envPath)) {
+    return
+  }
+  const content = fs.readFileSync(envPath, "utf8")
+  content.split("\n").forEach((line: string) => {
+    const trimmed = line.trim()
+    if (!trimmed || trimmed.startsWith("#")) {
+      return
+    }
+    const index = trimmed.indexOf("=")
+    if (index <= 0) {
+      return
+    }
+    const key = trimmed.slice(0, index).trim()
+    const value = trimmed.slice(index + 1).trim()
+    if (key && value && !process.env[key]) {
+      process.env[key] = value
+    }
+  })
+}
+
+function parseFigmaUrls(raw?: string): string[] {
+  if (!raw) return []
+  return raw
+    .split(/[\n,]+/)
+    .map((item) => item.trim())
+    .filter(Boolean)
 }
 
 type ComponentInfo = {
@@ -334,27 +365,40 @@ async function fetchComponentsFromFigma(figmaUrl: string, token: string): Promis
   }
 
   // 获取组件列表
-  const result = listComponentsFromFigmaData(figmaData)
+  const result = listComponentsFromFigmaData(figmaData, {
+    includeNestedInstances: process.env.FIGMA_TOP_LEVEL_ONLY !== "1",
+  })
   
   // 转换为 ComponentInfo 格式
-  return result.components.map((comp) => ({
-    componentId: comp.componentId,
-    componentName: comp.componentName,
-    figmaLink: buildFigmaLink(fileKey, comp.componentId),
-    count: comp.count,
-  }))
+  return result.components
+    .filter((comp): comp is { componentId: string; componentName: string; count: number } =>
+      Boolean(comp.componentId && comp.componentName),
+    )
+    .map((comp) => ({
+      componentId: comp.componentId,
+      componentName: comp.componentName,
+      figmaLink: buildFigmaLink(fileKey, comp.componentId),
+      count: comp.count,
+    }))
 }
 
 async function main() {
+  loadEnvFile()
   const args = process.argv.slice(2)
   const figmaUrlIndex = args.indexOf("--figmaUrl")
   const tokenIndex = args.indexOf("--token")
   
   const figmaUrl = figmaUrlIndex >= 0 ? args[figmaUrlIndex + 1] : undefined
-  const token = tokenIndex >= 0 ? args[tokenIndex + 1] : process.env.FIGMA_API_KEY || process.env.FIGMA_TOKEN
+  const token =
+    tokenIndex >= 0
+      ? args[tokenIndex + 1]
+      : process.env.FIGMA_API_KEY || process.env.FIGMA_TOKEN
   
-  if (!figmaUrl) {
+  const urlList = figmaUrl ? [figmaUrl] : parseFigmaUrls(process.env.FIGMA_URLS)
+
+  if (!urlList.length) {
     console.error("Usage: npm run mapping:update-status -- --figmaUrl <url> [--token <token>]")
+    console.error("Or set FIGMA_URLS in data/.env for batch mode")
     process.exit(1)
   }
   
@@ -362,20 +406,26 @@ async function main() {
     console.error("Missing Figma API token (FIGMA_API_KEY or --token)")
     process.exit(1)
   }
-  
-  console.log("正在获取组件列表...")
-  const components = await fetchComponentsFromFigma(figmaUrl, token)
-  console.log(`找到 ${components.length} 个唯一组件`)
-  
-  console.log("正在检查映射状态...")
-  const mapped = readMappedComponents()
-  
-  const nodeId = extractNodeId(figmaUrl)
-  console.log("正在生成文档...")
-  const markdown = generateStatusMarkdown(components, mapped, figmaUrl, nodeId)
-  
-  fs.writeFileSync(statusDocPath, markdown, "utf8")
-  console.log(`✅ 文档已更新: ${statusDocPath}`)
+
+  let lastMarkdown = ""
+  for (const url of urlList) {
+    console.log(`\n处理 Figma URL: ${url}`)
+    console.log("正在获取组件列表...")
+    const components = await fetchComponentsFromFigma(url, token)
+    console.log(`找到 ${components.length} 个唯一组件`)
+
+    console.log("正在检查映射状态...")
+    const mapped = readMappedComponents()
+
+    const nodeId = extractNodeId(url)
+    console.log("正在生成文档...")
+    lastMarkdown = generateStatusMarkdown(components, mapped, url, nodeId)
+  }
+
+  if (lastMarkdown) {
+    fs.writeFileSync(statusDocPath, lastMarkdown, "utf8")
+    console.log(`✅ 文档已更新: ${statusDocPath}`)
+  }
 }
 
 main().catch(console.error)
