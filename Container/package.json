@@ -1,0 +1,46 @@
+{
+    "name": "@spotter/lowcode-container",
+    "version": "0.0.10",
+    "description": "spotter低代码组件 Container",
+    "scripts": {
+        "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 vite build",
+        "build:watch": "rm -Rf lib/ && vite build --watch",
+        "prepublishOnly": "npm run build"
+    },
+    "author": "yasen",
+    "license": "ISC",
+    "main": "lib/index.js",
+    "module": "lib/index.mjs",
+    "types": "lib/components/Container/src/index.d.ts",
+    "files": [
+        "lib"
+    ],
+    "sideEffects": [
+        "**/*.css"
+    ],
+    "peerDependencies": {
+        "@ant-design/icons": ">=4.7.0",
+        "@ant-design/pro-components": ">=2.4.8",
+        "@volcengine/i18n": "^1.0.5",
+        "antd": ">=5.0.0",
+        "classnames": ">=2.3.1",
+        "dayjs": ">=1.10.6",
+        "react": "^17.0.2",
+        "react-dom": ">=17.0.0",
+        "@types/react": "17.0.44",
+        "typescript": ">=4.9.5",
+        "@spotter/ui": "^1.0.41",
+        "unocss": "^0.53.4",
+        "nanoid": "^4.0.0",
+        "lodash": ">=4.17.21",
+        "@types/lodash": ">=4.14.0"
+    },
+    "devDependencies": {
+        "vite": "^4.0.4",
+        "@vitejs/plugin-react": "4.1.1",
+        "vite-plugin-dts": "3.6.3",
+        "@spotter/lowcode-config-common": "workspace:*",
+        "@spotter/lowcode-common": "workspace:*",
+        "@spotter/lowcode-core": "workspace:*"
+    }
+}

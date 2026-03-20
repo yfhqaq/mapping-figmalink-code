@@ -1,0 +1,93 @@
+.spotter-transfer {
+    display: block;
+    height: 100%;
+
+    > .ant-spin-nested-loading {
+        height: 100%;
+
+        > .ant-spin-container {
+            height: 100%;
+        }
+    }
+
+    &-loading-container {
+        display: flex;
+        height: 100%;
+
+        .spotter-transfer-all-options-container {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            padding: 12px 12px 0;
+            border: 1px solid #f0f0f0;
+
+            .spotter-transfer-all-options-title {
+                margin-top: 8px;
+                margin-bottom: 6px;
+
+                &-summary {
+                    margin-right: 12px;
+                }
+            }
+
+            .spotter-transfer-all-options-list {
+                flex-grow: 1;
+                height: 0;
+                overflow-y: auto;
+
+                &-item {
+                    margin: 10px 0;
+                }
+
+                .ant-checkbox-group {
+                    display: flex;
+                    flex-direction: column;
+
+                    .ant-checkbox-group-item {
+                        margin: 5px 0;
+                    }
+                }
+            }
+        }
+
+        .spotter-transfer-checked-options-container {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            padding: 12px 12px 0;
+            border: 1px solid #f0f0f0;
+
+            .spotter-transfer-checked-options-title {
+                margin-bottom: 10px;
+
+                &-summary {
+                    margin-right: 12px;
+                }
+            }
+
+            .spotter-transfer-checked-options-list {
+                flex-grow: 1;
+                height: 0;
+                overflow-y: auto;
+
+                &-item {
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 5px 0;
+
+                    &-label {
+                        flex-grow: 1;
+                    }
+
+                    &-action {
+                        &.remove {
+                            color: rgb(0 0 0 / 25%);
+                            font-size: 12px;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

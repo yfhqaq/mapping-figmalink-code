@@ -1,0 +1,27 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        /* Basic Options */
+        "jsx": "react-jsx" /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */,
+        "isolatedModules": true /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */,
+        /* Module Resolution Options */
+        /* Extensional Options 我们使用 babel 进行编译，但此项可以帮助编辑器正确提示错误 */
+        "target": "ES2019" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
+        "module": "ESNext" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "paths": {
+            // 配置模块路径映射
+            "@client/*": ["./client/*"],
+            "@server/*": ["./server/*"],
+            "@scripts/*": ["./scripts/webpack/*"],
+            "@img/*": ["./client/img/*"],
+            "@app/*": ["./client/app/*"],
+            "@spotter/lowcode-common": ["../../packages/common/src/index.ts"],
+            "@spotter/lowcode-core": ["../../packages/enginCore/src/index.ts"],
+            "@spotter/lowcode-config-common": ["../ConfigCommon/src/index.ts"],
+        },
+    }
+}

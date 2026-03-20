@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "href": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string"
+    },
+    "onClick": {
+      "type": "object"
+    },
+    "type": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "object"
+    },
+    "shape": {
+      "type": "string"
+    },
+    "size": {
+      "type": "object"
+    },
+    "loading": {
+      "type": "string"
+    },
+    "prefixCls": {
+      "type": "string"
+    },
+    "className": {
+      "type": "string"
+    },
+    "ghost": {
+      "type": "string"
+    },
+    "danger": {
+      "type": "string"
+    },
+    "block": {
+      "type": "string"
+    },
+    "children": {
+      "type": "object"
+    },
+    "htmlType": {
+      "type": "string"
+    }
+  }
+}

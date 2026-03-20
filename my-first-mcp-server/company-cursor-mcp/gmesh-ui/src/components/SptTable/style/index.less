@@ -1,0 +1,366 @@
+// spotter-table
+.spt-table-wrap {
+    .spt-table-search {
+        padding-top: 12px;
+        padding-bottom: 16px;
+        // .spt-table-search-form {
+        // }
+
+        .spt-table-search-cols {
+            display: flex;
+            // align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 8px;
+        }
+
+        .spt-table-search-actions {
+            margin-bottom: 0;
+        }
+    }
+
+    .spt-table-pagination-wrap {
+        bottom: 0;
+        position: sticky;
+        z-index: 99;
+        background: #fff;
+        margin: 0;
+        padding: 12px 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        .spt-table-pagination {
+            .ant-pagination-item {
+                width: 32px;
+                height: 32px;
+            }
+            .ant-pagination-item-active {
+                background: #f0f5ff;
+                border-color: #f0f5ff;
+                color: var(--primary-color);
+            }
+            .ant-pagination-total-text {
+                height: 32px;
+                line-height: 32px;
+            }
+
+            .ant-pagination-item-ellipsis {
+                font-size: 10px;
+            }
+        }
+    }
+
+    .spt-table-global-divider {
+        width: 1px;
+        height: 22px;
+        background-color: #ebebeb;
+    }
+}
+
+.spt-table-wrap.spotter-table-fit-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.spotter-table {
+    .spotter-table-wrapper {
+        position: relative;
+        height: 100%;
+        transition: opacity 0.3s;
+
+        .ant-table-sticky-scroll {
+            display: none;
+        }
+
+        .spotter-table-column-resizable-marker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 9;
+            // 默认初始化时隐藏
+            display: none;
+            width: 1px;
+            height: 100%;
+            background: var(--color-primary);
+            cursor: col-resize;
+
+            &::before {
+                position: absolute;
+                top: 0;
+                left: -100vw;
+                z-index: 8;
+                display: block;
+                width: 200vw;
+                height: 100%;
+                background: transparent;
+                cursor: col-resize;
+                content: '';
+                user-select: none;
+            }
+        }
+
+        .ant-table-wrapper {
+            .ant-table-thead {
+                // 排除 .ant-table-selection-column .ant-table-row-expand-icon-cell
+                > tr > th {
+                    height: 47px;
+                    line-height: 16px;
+                    padding-block: 0;
+
+                    &:not(:last-child):not(.ant-table-selection-column):not(
+                            .ant-table-row-expand-icon-cell
+                        ) {
+                        &::before {
+                            display: none;
+                        }
+
+                        .spotter-table-header-column-resize-trigger {
+                            position: absolute;
+                            right: -8px;
+                            bottom: 0;
+                            z-index: 1;
+                            width: 16px;
+                            height: 100%;
+                            text-align: center;
+                            cursor: ew-resize;
+
+                            &::after {
+                                display: inline-block;
+                                width: 0.5px;
+                                //width: 1px;
+                                height: 50%;
+                                background-color: #d9d9d9;
+                                transform: translate(-50%, 50%);
+                                transition: background-color 0.2s;
+                                content: '';
+                                inset-inline-end: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .actions-wrapper {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.spotter-table.spotter-table-fit-content {
+    &.ant-pro-table > .ant-pro-card > .ant-pro-card-body {
+        > .spotter-table-wrapper {
+            &.with-pagination {
+                > .ant-table-wrapper > .ant-spin-nested-loading > .ant-spin-container {
+                    > .ant-table:not(.ant-table-empty) {
+                        > .spotter-table-sticky-scroll-bar {
+                            bottom: 56px;
+                        }
+                    }
+                }
+            }
+
+            > .ant-table-wrapper
+                > .ant-spin-nested-loading
+                > .ant-spin-container
+                > .ant-table
+                > .spotter-table-sticky-scroll-bar {
+                position: sticky;
+                bottom: 0;
+                left: 0;
+                z-index: 99;
+                display: flex;
+                align-items: flex-start;
+                width: 100%;
+                margin-top: -8px;
+
+                &.spotter-table-sticky-scroll-bar-thumb-dragging {
+                    &::before {
+                        position: fixed;
+                        top: 0;
+                        left: -100vw;
+                        z-index: 8;
+                        display: block;
+                        width: 200vw;
+                        height: 100vh;
+                        background: transparent;
+                        content: '';
+                        user-select: none;
+                    }
+                }
+
+                > .spotter-table-sticky-scroll-bar-track {
+                    position: absolute;
+                    z-index: 8;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                > .spotter-table-sticky-scroll-bar-thumb {
+                    z-index: 9;
+                    height: 8px;
+                    background: rgb(108 122 121 / 50%);
+                    border-radius: 1ex;
+
+                    &:hover {
+                        background: #999 !important;
+                    }
+                }
+            }
+        }
+
+        > .spotter-table-wrapper > .ant-table-wrapper,
+        > .ant-table-wrapper {
+            > .ant-spin-nested-loading > .ant-spin-container {
+                > .ant-table-pagination {
+                    position: sticky;
+                    bottom: 0;
+                    z-index: 99;
+                }
+
+                > .ant-table {
+                    > .ant-table-container {
+                        > .ant-table-sticky-scroll {
+                            display: none !important;
+                        }
+
+                        > .ant-table-body {
+                            &::-webkit-scrollbar {
+                                display: none;
+                            }
+                            scrollbar-width: none;
+                        }
+                    }
+                }
+                /**
+                  仅当
+                  -  屏幕最小高度小于 1080px
+                  -  ant-table 不为空
+                  -  ant-table 有 pagination 时
+                  才启用下面的 sticky 阴影效果
+                 */
+                > .ant-table:has(+ .ant-pagination):not(.ant-table-empty) {
+                    &::after {
+                        position: sticky;
+                        top: initial;
+                        right: initial;
+                        bottom: 32px;
+                        left: initial;
+                        z-index: 10;
+                        display: block;
+                        width: 100%;
+                        height: 24px;
+                        margin-top: 12px;
+                        margin-bottom: -34px;
+                        padding: 0 24px;
+                        background: transparent;
+                        //box-shadow: inset -10px 0 8px -8px rgb(0 0 0 / 15%);
+                        border: none;
+                        /* pointer-events: none; */
+                        /* box-shadow: 0px -10px 8px -8px rgb(0 0 0 / 15%); */
+                        box-shadow: 0 -10px 15px -8px rgb(0 0 0 / 15%);
+                        opacity: 1;
+
+                        /* transition: all 0.3s; */
+                        content: '';
+                    }
+                }
+            }
+        }
+    }
+}
+
+.spotter-table.spotter-table-fit-container {
+    // 兼容 extra 结构，例如 Amazon PO Order
+    &.ant-pro-table:not(.ant-pro-table-extra) {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        > .ant-pro-card {
+            flex-grow: 1;
+            height: 0;
+
+            > .ant-pro-card-body {
+                display: flex;
+                flex-direction: column;
+
+                > .spotter-table-wrapper,
+                > .spotter-table-wrapper .ant-table-wrapper,
+                > .ant-table-wrapper {
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 1;
+                    height: 0;
+
+                    > .ant-spin-nested-loading {
+                        height: 100%;
+
+                        > .ant-spin-container {
+                            display: flex;
+                            flex-direction: column;
+                            height: 100%;
+
+                            > .ant-table {
+                                flex-grow: 1;
+                                height: 0;
+                                overflow: hidden;
+
+                                &::after {
+                                    display: none;
+                                }
+
+                                > .ant-table-container {
+                                    display: flex;
+                                    flex-direction: column;
+                                    height: 100%;
+
+                                    > .ant-table-sticky-scroll {
+                                        display: none !important;
+                                    }
+
+                                    > .ant-table-body {
+                                        flex-grow: 1;
+                                        height: 0;
+                                        overflow: scroll;
+                                    }
+                                }
+                            }
+
+                            > .ant-table-pagination {
+                                margin-top: 0 !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        > .ant-pro-table-search {
+            flex: none;
+            height: auto;
+        }
+    }
+}
+
+.spotter-table.spotter-table-fit-none {
+    &.ant-pro-table > .ant-pro-card > .ant-pro-card-body {
+        > .spotter-table-wrapper > .ant-table-wrapper,
+        > .ant-table-wrapper {
+            > .ant-spin-nested-loading > .ant-spin-container {
+                > .ant-table {
+                    > .ant-table-container {
+                        > .ant-table-sticky-scroll {
+                            display: none !important;
+                        }
+                    }
+
+                    > .spotter-table-sticky-scroll-bar {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}

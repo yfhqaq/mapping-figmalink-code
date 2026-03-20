@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "@types/path-browserify": "^1.0.2"
+  },
+  "dependencies": {
+    "@spotter/ui": "1.0.29-nic.test.8",
+    "antd": "^4.20.2",
+    "ts-morph": "^23.0.0"
+  }
+}

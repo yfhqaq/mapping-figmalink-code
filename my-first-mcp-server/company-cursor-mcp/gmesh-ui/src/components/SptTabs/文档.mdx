@@ -1,0 +1,45 @@
+import { Canvas, Meta } from '@storybook/blocks';
+
+import * as SptTabWithBadge from './index.stories';
+
+<Meta of={SptTabWithBadge} />
+
+# SptTabs
+
+SptTabs 是一个基于 Antd Tabs 封装的带徽标的标签页组件。
+
+## 基础用法
+
+最基本的标签页使用方式。
+
+<Canvas of={SptTabWithBadge.Basic} sourceState="shown" />
+
+## 行内徽标
+
+在标签文本后面直接展示徽标数字。
+
+<Canvas of={SptTabWithBadge.InlineBadgeTab} sourceState="shown" />
+
+## 角标徽标
+
+在标签右上角展示徽标。
+
+<Canvas of={SptTabWithBadge.CornerBadgeTab} sourceState="shown" />
+
+## 自定义徽标样式
+
+可以自定义徽标的颜色、大小等样式。
+
+<Canvas of={SptTabWithBadge.CustomBadgeStyle} sourceState="shown" />
+
+## 标签页内容销毁
+
+通过 destroyInactiveTabPane 属性控制是否在切换标签时销毁非活动标签的内容。
+
+<Canvas of={SptTabWithBadge.TabPanelDestroy} sourceState="shown" />
+
+## 不同尺寸
+
+支持大、中、小三种尺寸。
+
+<Canvas of={SptTabWithBadge.SizeVariants} sourceState="shown" />

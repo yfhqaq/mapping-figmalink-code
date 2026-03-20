@@ -1,0 +1,151 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="About/开发指南"/>
+
+# 开发指南
+
+该项目包含一个server服务，一个storybook服务
+
+- server 服务用于提供基于业务的接口数据和部署的http服务
+- storybook 服务用于提供组件的开发和文档
+
+### 1. 环境配置
+
+```
+node >= v16.20.0
+pnpm >= 8.8.0
+```
+
+使用国内源进行开发： https://registry.npmmirror.com/
+
+### 2. 安装依赖
+
+```bash
+pnpm i
+
+cd server && npm install
+```
+
+### 3. 启动项目
+
+
+```bash
+pnpm dev
+
+cd server && node index.js
+```
+
+### 4. 新增一个组件
+
+假设你要新增一个`Link` 组件，你可以这样操作：
+在`src/components` 下增加一个`SptButton` 目录，目录下增加`index.tsx` 和 `index.stories.tsx` 文件
+
+组件代码 `src/components/index.tsx`
+
+```tsx
+import React from 'react';
+import { DEFAULT_EMPTY_VALUE } from '@spotter/app-client-toolkit';
+import { SptLinkType } from '../SptLink';
+import SptOuterLink from '../SptOuterLink';
+import { SptComponentProvider } from '../Provider';
+
+export interface SptAsinLinkProps {
+    type?: SptLinkType;
+    asin: string;
+}
+
+/**
+ * 业务组件：跳转亚马逊 https://www.amazon.com/dp/{asin}
+ * @param param0
+ * @returns
+ */
+const SptAsinLink: React.FC<SptAsinLinkProps> = ({ type = 'new', asin }) => {
+    return (
+        <SptComponentProvider>
+            <span>
+                {asin ? (
+                    <SptOuterLink
+                        to={`https://www.amazon.com/dp/${asin}`}
+                        text={asin}
+                        type={type}
+                    />
+                ) : (
+                    DEFAULT_EMPTY_VALUE
+                )}
+            </span>
+        </SptComponentProvider>
+    );
+};
+
+export default SptAsinLink;
+```
+
+组件文档：`src/components/index.stories.tsx`
+
+```tsx
+import type { Meta, StoryObj } from '@storybook/react';
+import SptAsinLink from '.';
+
+const meta = {
+    title: 'Library/SptAsinLink',
+    component: SptAsinLink,
+    tags: ['autodocs'],
+} satisfies Meta<typeof SptAsinLink>;
+
+export default meta;
+
+type Story = StoryObj<typeof SptAsinLink>;
+
+export const Default: Story = {
+    args: {
+        asin: 'ASIN12398120238'
+    },
+};
+```
+
+将该组件导出： `src/index.ts`
+
+```tsx
+...other components
+export { default as SptAsinLink } from './SptAsinLink';
+export type { SptAsinLinkProps } from './components/SptAsinLink';
+```
+
+- `export type` 导出后无法当作值使用, `enum` 枚举值不建议通过type导出
+
+### 5. 单元测试
+
+```bash
+pnpm test
+```
+
+### 6. 代码规范
+
+此项目采用比较严格的代码规范，包括`eslint` 和 `prettier`，请在提交代码前进行格式化
+
+### 7. 代码提交
+
+此项目强制要求 Conventional Commits 规范，提交代码时做了强制校验，如果不符合规范，将无法提交代码。并且采用自动化的 changelog 生成工具，可以根据提交的代码自动生成 changelog。
+
+生成新的changelog
+```bash
+pnpm run changelog
+```
+
+### 8. 发布
+
+1. 自动发布
+
+自动发布默认使用 `patch` 进行版本升级，如果需要升级 `minor` 或者 `major`，请手动发布
+```bash
+pnpm run release
+```
+
+2. 手动发布
+
+```bash
+pnpm version minor
+
+pnpm publish
+```
+

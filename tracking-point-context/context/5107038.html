@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="initial-scale=1.0,user-scalable=no,minimal-ui">
+        <title>如何设计出一个实用高效的埋点管理系统？ | 人人都是产品经理</title>
+        <meta name="baidu-site-verification" content="codeva-oZwKtV7LDl"/>
+        <meta property="og:title" content="如何设计出一个实用高效的埋点管理系统？ &#8211; 人人都是产品经理">
+        <meta property="og:url" content="https://www.woshipm.com/data-analysis/5107308.html">
+        <meta property="og:image" content="https://image.woshipm.com/wp-files/2021/08/BOtniOdRkTK5h5gIDQJK.jpg">
+        <meta property="og:description" content="编辑导语：埋点管理系统的搭建在一定程度上解决了埋点设计管理混乱的问题，方便数据查询，提高了团队的沟通效率，进而推动整体业务项目的高效进行。本篇文章里，作者就如何设计一个高效便利的埋点管理系统做了总结，一起来看一下。 一、为什么要做埋点管理系统？ 如果你是一名数">
+        <meta property="og:type" content="article">
+        <script type="application/ld+json">
+            {
+                "@context": "http://schema.org",
+                "@type": "Article",
+                "name": "如何设计出一个实用高效的埋点管理系统？ &#8211; 人人都是产品经理,",
+                "author": "产品人走专业派",
+                "description": "编辑导语：埋点管理系统的搭建在一定程度上解决了埋点设计管理混乱的问题，方便数据查询，提高了团队的沟通效率，进而推动整体业务项目的高效进行。本篇文章里，作者就如何设计一个高效便利的埋点管理系统做了总结，一起来看一下。 一、为什么要做埋点管理系统？ 如果你是一名数",
+                "image": [
+                    "https:https://image.woshipm.com/wp-files/2021/08/BOtniOdRkTK5h5gIDQJK.jpg",
+                    "https:https://image.woshipm.com/wp-files/2021/08/k7J8254AtvueYC0XUYsD.png",
+                    "https:https://image.woshipm.com/wp-files/2021/08/S9m3hO3uyd88fXPbeNhk.png"
+                ],
+                "datePublished": "2021-08-25T11:08:36",
+                "commentCount": 3,
+                "interactionStatistic": {
+                    "@type": "InteractionCounter",
+                    "interactionType": "http://schema.org/LikeAction",
+                    "userInteractionCount": 0
+                }
+            }</script>
+        <meta name="keywords" content="1年, 初级, 埋点系统, ">
+        <meta name="description" content="编辑导语：埋点管理系统的搭建在一定程度上解决了埋点设计管理混乱的问题，方便数据查询，提高了团队的沟通效率，进而推动整体业务项目的高效进行。本篇文章里，作者就如何设计一个高效便利的埋点管理系统做了总结，一起来看一下。 一、为什么要做埋点管理系统？ 如果你是一名数">
+        <link type="image/vnd.microsoft.icon" href="//image.woshipm.com/favicon.ico" rel="shortcut icon">
+        <meta name='robots' content='max-image-preview:large'/>
+        <style>
+            img:is([sizes="auto" i], [sizes^="auto," i]) {
+                contain-intrinsic-size: 3000px 1500px
+            }
+        </style>
+        <link rel='dns-prefetch' href='//image.woshipm.com'/>
+        <script type="text/javascript">
+            /* <![CDATA[ */
+            window._wpemojiSettings = {
+                "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/72x72\/",
+                "ext": ".png",
+                "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/svg\/",
+                "svgExt": ".svg",
+                "source": {
+                    "concatemoji": "https:\/\/www.woshipm.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.8.3"
+                }
+            };
+            /*! This file is auto-generated */
+            !function(s, n) {
+                var o, i, e;
+                function c(e) {
+                    try {
+                        var t = {
+                            supportTests: e,
+                            timestamp: (new Date).valueOf()
+                        };
+                        sessionStorage.setItem(o, JSON.stringify(t))
+                    } catch (e) {}
+                }
+                function p(e, t, n) {
+                    e.clearRect(0, 0, e.canvas.width, e.canvas.height),
+                    e.fillText(t, 0, 0);
+                    var t = new Uint32Array(e.getImageData(0, 0, e.canvas.width, e.canvas.height).data)
+                      , a = (e.clearRect(0, 0, e.canvas.width, e.canvas.height),
+                    e.fillText(n, 0, 0),
+                    new Uint32Array(e.getImageData(0, 0, e.canvas.width, e.canvas.height).data));
+                    return t.every(function(e, t) {
+                        return e === a[t]
+                    })
+                }
+                function u(e, t) {
+                    e.clearRect(0, 0, e.canvas.width, e.canvas.height),
+                    e.fillText(t, 0, 0);
+                    for (var n = e.getImageData(16, 16, 1, 1), a = 0; a < n.data.length; a++)
+                        if (0 !== n.data[a])
+                            return !1;
+                    return !0
+                }
+                function f(e, t, n, a) {
+                    switch (t) {
+                    case "flag":
+                        return n(e, "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f", "\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f") ? !1 : !n(e, "\ud83c\udde8\ud83c\uddf6", "\ud83c\udde8\u200b\ud83c\uddf6") && !n(e, "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f", "\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");
+                    case "emoji":
+                        return !a(e, "\ud83e\udedf")
+                    }
+                    return !1
+                }
+                function g(e, t, n, a) {
+                    var r = "undefined" != typeof WorkerGlobalScope && self instanceof WorkerGlobalScope ? new OffscreenCanvas(300,150) : s.createElement("canvas")
+                      , o = r.getContext("2d", {
+                        willReadFrequently: !0
+                    })
+                      , i = (o.textBaseline = "top",
+                    o.font = "600 32px Arial",
+                    {});
+                    return e.forEach(function(e) {
+                        i[e] = t(o, e, n, a)
+                    }),
+                    i
+                }
+                function t(e) {
+                    var t = s.createElement("script");
+                    t.src = e,
+                    t.defer = !0,
+                    s.head.appendChild(t)
+                }
+                "undefined" != typeof Promise && (o = "wpEmojiSettingsSupports",
+                i = ["flag", "emoji"],
+                n.supports = {
+                    everything: !0,
+                    everythingExceptFlag: !0
+                },
+                e = new Promise(function(e) {
+                    s.addEventListener("DOMContentLoaded", e, {
+                        once: !0
+                    })
+                }
+                ),
+                new Promise(function(t) {
+                    var n = function() {
+                        try {
+                            var e = JSON.parse(sessionStorage.getItem(o));
+                            if ("object" == typeof e && "number" == typeof e.timestamp && (new Date).valueOf() < e.timestamp + 604800 && "object" == typeof e.supportTests)
+                                return e.supportTests
+                        } catch (e) {}
+                        return null
+                    }();
+                    if (!n) {
+                        if ("undefined" != typeof Worker && "undefined" != typeof OffscreenCanvas && "undefined" != typeof URL && URL.createObjectURL && "undefined" != typeof Blob)
+                            try {
+                                var e = "postMessage(" + g.toString() + "(" + [JSON.stringify(i), f.toString(), p.toString(), u.toString()].join(",") + "));"
+                                  , a = new Blob([e],{
+                                    type: "text/javascript"
+                                })
+                                  , r = new Worker(URL.createObjectURL(a),{
+                                    name: "wpTestEmojiSupports"
+                                });
+                                return void (r.onmessage = function(e) {
+                                    c(n = e.data),
+                                    r.terminate(),
+                                    t(n)
+                                }
+                                )
+                            } catch (e) {}
+                        c(n = g(i, f, p, u))
+                    }
+                    t(n)
+                }
+                ).then(function(e) {
+                    for (var t in e)
+                        n.supports[t] = e[t],
+                        n.supports.everything = n.supports.everything && n.supports[t],
+                        "flag" !== t && (n.supports.everythingExceptFlag = n.supports.everythingExceptFlag && n.supports[t]);
+                    n.supports.everythingExceptFlag = n.supports.everythingExceptFlag && !n.supports.flag,
+                    n.DOMReady = !1,
+                    n.readyCallback = function() {
+                        n.DOMReady = !0
+                    }
+                }).then(function() {
+                    return e
+                }).then(function() {
+                    var e;
+                    n.supports.everything || (n.readyCallback(),
+                    (e = n.source || {}).concatemoji ? t(e.concatemoji) : e.wpemoji && e.twemoji && (t(e.twemoji),
+                    t(e.wpemoji)))
+                }))
+            }((window,
+            document), window._wpemojiSettings);
+            /* ]]> */
+        </script>
+        <style id='wp-emoji-styles-inline-css' type='text/css'>
+            img.wp-smiley, img.emoji {
+                display: inline !important;
+                border: none !important;
+                box-shadow: none !important;
+                height: 1em !important;
+                width: 1em !important;
+                margin: 0 0.07em !important;
+                vertical-align: -0.1em !important;
+                background: none !important;
+                padding: 0 !important;
+            }
+        </style>
+        <link rel='stylesheet' id='wp-block-library-css' href='https://www.woshipm.com/wp-includes/css/dist/block-library/style.min.css?ver=6.8.3' type='text/css' media='all'/>
+        <style id='classic-theme-styles-inline-css' type='text/css'>
+            /*! This file is auto-generated */
+            .wp-block-button__link {
+                color: #fff;
+                background-color: #32373c;
+                border-radius: 9999px;
+                box-shadow: none;
+                text-decoration: none;
+                padding: calc(.667em + 2px) calc(1.333em + 2px);
+                font-size: 1.125em
+            }
+
+            .wp-block-file__button {
+                background: #32373c;
+                color: #fff;
+                text-decoration: none
+            }
+        </style>
+        <style id='global-styles-inline-css' type='text/css'>
+            :root {
+                --wp--preset--aspect-ratio--square: 1;
+                --wp--preset--aspect-ratio--4-3: 4/3;
+                --wp--preset--aspect-ratio--3-4: 3/4;
+                --wp--preset--aspect-ratio--3-2: 3/2;
+                --wp--preset--aspect-ratio--2-3: 2/3;
+                --wp--preset--aspect-ratio--16-9: 16/9;
+                --wp--preset--aspect-ratio--9-16: 9/16;
+                --wp--preset--color--black: #000000;
+                --wp--preset--color--cyan-bluish-gray: #abb8c3;
+                --wp--preset--color--white: #ffffff;
+                --wp--preset--color--pale-pink: #f78da7;
+                --wp--preset--color--vivid-red: #cf2e2e;
+                --wp--preset--color--luminous-vivid-orange: #ff6900;
+                --wp--preset--color--luminous-vivid-amber: #fcb900;
+                --wp--preset--color--light-green-cyan: #7bdcb5;
+                --wp--preset--color--vivid-green-cyan: #00d084;
+                --wp--preset--color--pale-cyan-blue: #8ed1fc;
+                --wp--preset--color--vivid-cyan-blue: #0693e3;
+                --wp--preset--color--vivid-purple: #9b51e0;
+                --wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);
+                --wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);
+                --wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);
+                --wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);
+                --wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);
+                --wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);
+                --wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);
+                --wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);
+                --wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);
+                --wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);
+                --wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);
+                --wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);
+                --wp--preset--font-size--small: 13px;
+                --wp--preset--font-size--medium: 20px;
+                --wp--preset--font-size--large: 36px;
+                --wp--preset--font-size--x-large: 42px;
+                --wp--preset--spacing--20: 0.44rem;
+                --wp--preset--spacing--30: 0.67rem;
+                --wp--preset--spacing--40: 1rem;
+                --wp--preset--spacing--50: 1.5rem;
+                --wp--preset--spacing--60: 2.25rem;
+                --wp--preset--spacing--70: 3.38rem;
+                --wp--preset--spacing--80: 5.06rem;
+                --wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);
+                --wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);
+                --wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);
+                --wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);
+                --wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);
+            }
+
+            :where(.is-layout-flex) {
+                gap: 0.5em;
+            }
+
+            :where(.is-layout-grid) {
+                gap: 0.5em;
+            }
+
+            body .is-layout-flex {
+                display: flex;
+            }
+
+            .is-layout-flex {
+                flex-wrap: wrap;
+                align-items: center;
+            }
+
+            .is-layout-flex > :is(*, div) {
+                margin: 0;
+            }
+
+            body .is-layout-grid {
+                display: grid;
+            }
+
+            .is-layout-grid > :is(*, div) {
+                margin: 0;
+            }
+
+            :where(.wp-block-columns.is-layout-flex) {
+                gap: 2em;
+            }
+
+            :where(.wp-block-columns.is-layout-grid) {
+                gap: 2em;
+            }
+
+            :where(.wp-block-post-template.is-layout-flex) {
+                gap: 1.25em;
+            }
+
+            :where(.wp-block-post-template.is-layout-grid) {
+                gap: 1.25em;
+            }
+
+            .has-black-color {
+                color: var(--wp--preset--color--black) !important;
+            }
+
+            .has-cyan-bluish-gray-color {
+                color: var(--wp--preset--color--cyan-bluish-gray) !important;
+            }
+
+            .has-white-color {
+                color: var(--wp--preset--color--white) !important;
+            }
+
+            .has-pale-pink-color {
+                color: var(--wp--preset--color--pale-pink) !important;
+            }
+
+            .has-vivid-red-color {
+                color: var(--wp--preset--color--vivid-red) !important;
+            }
+
+            .has-luminous-vivid-orange-color {
+                color: var(--wp--preset--color--luminous-vivid-orange) !important;
+            }
+
+            .has-luminous-vivid-amber-color {
+                color: var(--wp--preset--color--luminous-vivid-amber) !important;
+            }
+
+            .has-light-green-cyan-color {
+                color: var(--wp--preset--color--light-green-cyan) !important;
+            }
+
+            .has-vivid-green-cyan-color {
+                color: var(--wp--preset--color--vivid-green-cyan) !important;
+            }
+
+            .has-pale-cyan-blue-color {
+                color: var(--wp--preset--color--pale-cyan-blue) !important;
+            }
+
+            .has-vivid-cyan-blue-color {
+                color: var(--wp--preset--color--vivid-cyan-blue) !important;
+            }
+
+            .has-vivid-purple-color {
+                color: var(--wp--preset--color--vivid-purple) !important;
+            }
+
+            .has-black-background-color {
+                background-color: var(--wp--preset--color--black) !important;
+            }
+
+            .has-cyan-bluish-gray-background-color {
+                background-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+            }
+
+            .has-white-background-color {
+                background-color: var(--wp--preset--color--white) !important;
+            }
+
+            .has-pale-pink-background-color {
+                background-color: var(--wp--preset--color--pale-pink) !important;
+            }
+
+            .has-vivid-red-background-color {
+                background-color: var(--wp--preset--color--vivid-red) !important;
+            }
+
+            .has-luminous-vivid-orange-background-color {
+                background-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+            }
+
+            .has-luminous-vivid-amber-background-color {
+                background-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+            }
+
+            .has-light-green-cyan-background-color {
+                background-color: var(--wp--preset--color--light-green-cyan) !important;
+            }
+
+            .has-vivid-green-cyan-background-color {
+                background-color: var(--wp--preset--color--vivid-green-cyan) !important;
+            }
+
+            .has-pale-cyan-blue-background-color {
+                background-color: var(--wp--preset--color--pale-cyan-blue) !important;
+            }
+
+            .has-vivid-cyan-blue-background-color {
+                background-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+            }
+
+            .has-vivid-purple-background-color {
+                background-color: var(--wp--preset--color--vivid-purple) !important;
+            }
+
+            .has-black-border-color {
+                border-color: var(--wp--preset--color--black) !important;
+            }
+
+            .has-cyan-bluish-gray-border-color {
+                border-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+            }
+
+            .has-white-border-color {
+                border-color: var(--wp--preset--color--white) !important;
+            }
+
+            .has-pale-pink-border-color {
+                border-color: var(--wp--preset--color--pale-pink) !important;
+            }
+
+            .has-vivid-red-border-color {
+                border-color: var(--wp--preset--color--vivid-red) !important;
+            }
+
+            .has-luminous-vivid-orange-border-color {
+                border-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+            }
+
+            .has-luminous-vivid-amber-border-color {
+                border-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+            }
+
+            .has-light-green-cyan-border-color {
+                border-color: var(--wp--preset--color--light-green-cyan) !important;
+            }
+
+            .has-vivid-green-cyan-border-color {
+                border-color: var(--wp--preset--color--vivid-green-cyan) !important;
+            }
+
+            .has-pale-cyan-blue-border-color {
+                border-color: var(--wp--preset--color--pale-cyan-blue) !important;
+            }
+
+            .has-vivid-cyan-blue-border-color {
+                border-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+            }
+
+            .has-vivid-purple-border-color {
+                border-color: var(--wp--preset--color--vivid-purple) !important;
+            }
+
+            .has-vivid-cyan-blue-to-vivid-purple-gradient-background {
+                background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;
+            }
+
+            .has-light-green-cyan-to-vivid-green-cyan-gradient-background {
+                background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;
+            }
+
+            .has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background {
+                background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;
+            }
+
+            .has-luminous-vivid-orange-to-vivid-red-gradient-background {
+                background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;
+            }
+
+            .has-very-light-gray-to-cyan-bluish-gray-gradient-background {
+                background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;
+            }
+
+            .has-cool-to-warm-spectrum-gradient-background {
+                background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;
+            }
+
+            .has-blush-light-purple-gradient-background {
+                background: var(--wp--preset--gradient--blush-light-purple) !important;
+            }
+
+            .has-blush-bordeaux-gradient-background {
+                background: var(--wp--preset--gradient--blush-bordeaux) !important;
+            }
+
+            .has-luminous-dusk-gradient-background {
+                background: var(--wp--preset--gradient--luminous-dusk) !important;
+            }
+
+            .has-pale-ocean-gradient-background {
+                background: var(--wp--preset--gradient--pale-ocean) !important;
+            }
+
+            .has-electric-grass-gradient-background {
+                background: var(--wp--preset--gradient--electric-grass) !important;
+            }
+
+            .has-midnight-gradient-background {
+                background: var(--wp--preset--gradient--midnight) !important;
+            }
+
+            .has-small-font-size {
+                font-size: var(--wp--preset--font-size--small) !important;
+            }
+
+            .has-medium-font-size {
+                font-size: var(--wp--preset--font-size--medium) !important;
+            }
+
+            .has-large-font-size {
+                font-size: var(--wp--preset--font-size--large) !important;
+            }
+
+            .has-x-large-font-size {
+                font-size: var(--wp--preset--font-size--x-large) !important;
+            }
+
+            :where(.wp-block-post-template.is-layout-flex) {
+                gap: 1.25em;
+            }
+
+            :where(.wp-block-post-template.is-layout-grid) {
+                gap: 1.25em;
+            }
+
+            :where(.wp-block-columns.is-layout-flex) {
+                gap: 2em;
+            }
+
+            :where(.wp-block-columns.is-layout-grid) {
+                gap: 2em;
+            }
+
+            :root :where(.wp-block-pullquote) {
+                font-size: 1.5em;
+                line-height: 1.6;
+            }
+        </style>
+        <link rel='stylesheet' id='ui-css' href='//image.woshipm.com/fp/css/ui.css?ver=6.0.12' type='text/css' media='screen'/>
+        <link rel='stylesheet' id='swipper-css' href='//image.woshipm.com/fp/css/swiper-bundle.min.css?ver=6.0.12' type='text/css' media='screen'/>
+        <link rel='stylesheet' id='misc-css' href='//image.woshipm.com/fp/css/app.min.css?ver=6.0.12' type='text/css' media='screen'/>
+        <link rel='stylesheet' id='fa-css' href='//image.woshipm.com/kan/css/font-awesome.min.css?ver=6.0.12' type='text/css' media='screen'/>
+        <link rel="canonical" href="https://www.woshipm.com/data-analysis/5107308.html"/>
+        <link rel="icon" href="https://image.woshipm.com/wp-files/2024/11/MbtEc6Z3dCX41DLY4alz.png" sizes="32x32"/>
+        <link rel="icon" href="https://image.woshipm.com/wp-files/2024/11/MbtEc6Z3dCX41DLY4alz.png" sizes="192x192"/>
+        <link rel="apple-touch-icon" href="https://image.woshipm.com/wp-files/2024/11/MbtEc6Z3dCX41DLY4alz.png"/>
+        <meta name="msapplication-TileImage" content="https://image.woshipm.com/wp-files/2024/11/MbtEc6Z3dCX41DLY4alz.png"/>
+        <style>
+            .comment--location {
+                display: flex;
+                margin-top: 8px;
+                align-items: center;
+                font-size: 14px!important;
+                padding-left: 10px;
+                color: rgba(0,0,0,.5)!important;
+                fill: rgba(0,0,0,.5)!important;
+            }
+
+            .comment--location svg {
+                margin-right: 5px;
+            }
+        </style>
+    </head>
+    <body class="single u-backgroundColorLightBlue is-fixedHeader">
+        <div id="app" class="surface--content">
+            <el-backtop></el-backtop>
+            <header class="pm--metabar">
+                <div class="container u-flex">
+                    <a href="/" class="u-flex u-relative">
+                        <img class="logo" src="//image.woshipm.com/fp/images/logo.png" alt="人人都是产品经理">
+                    </a>
+                    <nav class="header-nav">
+                        <ul class="subnav-ul">
+                            <li class="menu-item">
+                                <a href="https://www.woshipm.com/">首页</a>
+                            </li>
+                            <li class="menu-item menu-item-has-children menu-item--new">
+                                <a href="javascript:;">培训课程</a>
+                                <div class="sub--menuWidth">
+                                    <div class="container dropCard--courses">
+                                        <div class="dropCourse--list">
+                                            <div class="dropCourse--title">
+                                                <a href="https://www.qidianla.com/" target="_blank">名师辅导课</a>
+                                            </div>
+                                            <div class="dropCourse--item">
+                                                <a href="https://ke.qidianla.com/courses/aipmtc" target="_blank">AI产品经理转岗特训营</a>
+                                            </div>
+                                            <div class="dropCourse--item">
+                                                <a href="https://vip.qidianla.com/studyClass.html" target="_blank">BAT大厂产品运营体系课</a>
+                                            </div>
+                                            <div class="dropCourse--item">
+                                                <a href="https://ke.qidianla.com/courses/bcpm" target="_blank">B端C端全栈产品经理私教课</a>
+                                            </div>
+                                            <div class="dropCourse--more">
+                                                <a href="https://www.qidianla.com/" target="_blank">
+                                                    查看更多<span class="el-icon-d-arrow-right"></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="dropCourse--list">
+                                            <div class="dropCourse--title">
+                                                <a href="https://www.qidianla.com/" target="_blank">个人自学课</a>
+                                            </div>
+                                            <div class="dropCourse--item">
+                                                <a href="https://ke.qidianla.com/courses/iom" target="_blank">互联网运营能力进阶</a>
+                                            </div>
+                                            <div class="dropCourse--item">
+                                                <a href="https://ke.qidianla.com/courses/bupm" target="_blank">业务产品经理能力进阶</a>
+                                            </div>
+                                            <div class="dropCourse--item">
+                                                <a href="https://ke.qidianla.com/courses/ecpm1" target="_blank">电商产品经理从入门到进阶</a>
+                                            </div>
+                                            <div class="dropCourse--more">
+                                                <a href="https://www.qidianla.com/" target="_blank">
+                                                    查看更多<span class="el-icon-d-arrow-right"></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="dropCourse--list">
+                                            <div class="dropCourse--title">
+                                                <a href="https://daxue.qidianla.com/" target="_blank">企业内训课</a>
+                                            </div>
+                                            <div class="dropCourse--double">
+                                                <div class="dropCourse--doubleItem">
+                                                    <div class="dropCourse--item">
+                                                        <a href="https://daxue.qidianla.com/" target="_blank">数字化产品经理课</a>
+                                                    </div>
+                                                    <div class="dropCourse--item">
+                                                        <a href="https://daxue.qidianla.com/" target="_blank">商业化产品实战课</a>
+                                                    </div>
+                                                    <div class="dropCourse--item">
+                                                        <a href="https://daxue.qidianla.com/" target="_blank">数字化营销体系课</a>
+                                                    </div>
+                                                </div>
+                                                <div class="dropCourse--doubleItem">
+                                                    <div class="dropCourse--item">
+                                                        <a href="https://daxue.qidianla.com/" target="_blank">B端运营实战课</a>
+                                                    </div>
+                                                    <div class="dropCourse--item">
+                                                        <a href="https://daxue.qidianla.com/" target="_blank">私域流量实战课</a>
+                                                    </div>
+                                                    <div class="dropCourse--item">
+                                                        <a href="https://daxue.qidianla.com/" target="_blank">数据分析体系课</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dropCourse--more">
+                                                <a href="https://daxue.qidianla.com/" target="_blank">
+                                                    查看更多<span class="el-icon-d-arrow-right"></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="menu-item menu-item-has-children">
+                                <a href="javascript:;">分类浏览</a>
+                                <svg width="14" height="14" viewBox="0 0 19 19" class="svgIcon">
+                                    <path d="M3.9 6.77l5.2 5.76.43.47.43-.47 5.15-5.7-.85-.77-4.73 5.25L4.75 6z" fill-rule="evenodd"></path>
+                                </svg>
+                                <div class="sub--menuWidth">
+                                    <div class="container dropCard--list">
+                                        <div class="pm--category">
+                                            <div class="pm--categoryItem">
+                                                <a href="https://www.woshipm.com/category/it" class="u-flex" target="_blank">
+                                                    <div class="content">
+                                                        <div class="name">业界动态</div>
+                                                        <div class="count">30656篇文章</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="pm--categoryItem">
+                                                <a href="https://www.woshipm.com/category/pd" class="u-flex" target="_blank">
+                                                    <div class="content">
+                                                        <div class="name">产品设计</div>
+                                                        <div class="count">19232篇文章</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="pm--categoryItem">
+                                                <a href="https://www.woshipm.com/category/operate" class="u-flex" target="_blank">
+                                                    <div class="content">
+                                                        <div class="name">产品运营</div>
+                                                        <div class="count">15134篇文章</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="pm--categoryItem">
+                                                <a href="https://www.woshipm.com/category/pmd" class="u-flex" target="_blank">
+                                                    <div class="content">
+                                                        <div class="name">产品经理</div>
+                                                        <div class="count">9564篇文章</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="pm--categoryItem">
+                                                <a href="https://www.woshipm.com/category/zhichang" class="u-flex" target="_blank">
+                                                    <div class="content">
+                                                        <div class="name">职场攻略</div>
+                                                        <div class="count">5305篇文章</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="pm--categoryItem">
+                                                <a href="https://www.woshipm.com/category/marketing" class="u-flex" target="_blank">
+                                                    <div class="content">
+                                                        <div class="name">营销推广</div>
+                                                        <div class="count">4852篇文章</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="pm--categoryItem">
+                                                <a href="https://www.woshipm.com/category/ucd" class="u-flex" target="_blank">
+                                                    <div class="content">
+                                                        <div class="name">交互体验</div>
+                                                        <div class="count">3918篇文章</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="pm--categoryItem">
+                                                <a href="https://www.woshipm.com/category/evaluating" class="u-flex" target="_blank">
+                                                    <div class="content">
+                                                        <div class="name">分析评测</div>
+                                                        <div class="count">3553篇文章</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="pm--categoryItem">
+                                                <a href="https://www.woshipm.com/category/chuangye" class="u-flex" target="_blank">
+                                                    <div class="content">
+                                                        <div class="name">创业学院</div>
+                                                        <div class="count">2242篇文章</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="pm--categoryItem">
+                                                <a href="https://www.woshipm.com/category/user-research" class="u-flex" target="_blank">
+                                                    <div class="content">
+                                                        <div class="name">用户研究</div>
+                                                        <div class="count">1890篇文章</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="pm--categoryItem">
+                                                <a href="https://www.woshipm.com/category/data-analysis" class="u-flex" target="_blank">
+                                                    <div class="content">
+                                                        <div class="name">数据分析</div>
+                                                        <div class="count">1792篇文章</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="pm--categoryItem">
+                                                <a href="https://www.woshipm.com/category/rp" class="u-flex" target="_blank">
+                                                    <div class="content">
+                                                        <div class="name">原型设计</div>
+                                                        <div class="count">1435篇文章</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="menu-item">
+                                <a target="_blank" data-id="37" data-adid="41" href="/category/active">活动讲座</a>
+                            </li>
+                            <li class="menu-item">
+                                <a target="_blank" data-id="35" data-adid="41" href="https://wen.woshipm.com/">问答</a>
+                            </li>
+                            <li class="menu-item">
+                                <a target="_blank" data-id="32" data-adid="41" href="https://daxue.qidianla.com/">企业培训</a>
+                            </li>
+                            <li class="menu-item">
+                                <a target="_blank" data-id="32" data-adid="41" href="/fish/">摸鱼</a>
+                            </li>
+                            <li class="menu-item">
+                                <a target="_blank" data-id="32" data-adid="41" href="/digest">快讯</a>
+                            </li>
+                            <li class="menu-item">
+                                <a target="_blank" data-id="32" data-adid="41" href="/harmony">HarmonyOS</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="pm--metabar__right u-flex">
+                        <a class="pm--metabarItem u-flex u-cursorPointer" href="https://api.woshipm.com/search/list.html" target="_blank">
+                            <svg class="svgIcon-use" width="16" height="16" viewBox="0 0 16 16">
+                                <path d="M15.800,14.481 L12.519,11.200 C12.504,11.184 12.487,11.170 12.471,11.156 C13.361,9.988 13.890,8.529 13.890,6.947 C13.890,3.110 10.780,-0.000 6.945,-0.000 C3.109,-0.000 -0.000,3.110 -0.000,6.947 C-0.000,10.785 3.109,13.895 6.945,13.895 C8.529,13.895 9.990,13.364 11.159,12.471 C11.172,12.487 11.186,12.503 11.201,12.518 L14.483,15.800 C14.786,16.104 15.329,16.056 15.693,15.692 C16.056,15.328 16.104,14.786 15.800,14.481 L15.800,14.481 ZM0.772,6.947 C0.772,3.537 3.535,0.771 6.945,0.771 C10.354,0.771 13.118,3.537 13.118,6.947 C13.118,8.621 12.453,10.138 11.373,11.250 C11.351,11.269 11.330,11.288 11.310,11.308 C11.289,11.329 11.269,11.351 11.250,11.373 C10.138,12.456 8.619,13.123 6.945,13.123 C3.535,13.123 0.772,10.358 0.772,6.947 L0.772,6.947 Z" class="cls-1"></path>
+                            </svg>
+                            搜索
+                    
+                        </a>
+                        <div class="pm--metabarItem pm--metabar__dropdown u-flex u-relative">
+                            <svg class="svgIcon-use" width="12" height="18" viewBox="0 0 12 18">
+                                <path d="M10.599,17.999 L1.401,17.999 C0.626,17.999 -0.000,17.381 -0.000,16.616 L-0.000,1.382 C-0.000,0.617 0.626,-0.001 1.401,-0.001 L10.599,-0.001 C11.374,-0.001 12.000,0.627 12.000,1.382 L12.000,16.616 C12.000,17.381 11.374,17.999 10.599,17.999 ZM11.066,1.382 C11.066,1.128 10.857,0.922 10.599,0.922 L1.401,0.922 C1.142,0.922 0.934,1.128 0.934,1.382 L0.934,12.800 L11.066,12.800 L11.066,1.382 ZM11.066,13.811 L0.934,13.811 L0.934,16.626 C0.934,16.881 1.142,17.087 1.401,17.087 L10.599,17.087 C10.857,17.087 11.066,16.881 11.066,16.626 L11.066,13.811 ZM6.000,16.283 C5.483,16.283 5.066,15.871 5.066,15.361 C5.066,14.851 5.483,14.439 6.000,14.439 C6.516,14.439 6.934,14.851 6.934,15.361 C6.934,15.871 6.516,16.283 6.000,16.283 Z"></path>
+                            </svg>
+                            APP
+                            <div class="pm--qrcodeCard__dropdown">
+                                <img class="app-qrcode-img" src="https://image.woshipm.com/build/img/footer-appdownload.png">
+                            </div>
+                        </div>
+                        <div class="pm--metabarItem pm--metabar__dropdown u-flex u-relative">
+                            <img src="https://image.woshipm.com/VIP.svg" width="32"/>
+                            <div class="pm--userCard__dropdown u-shadowed" style="right: -165px;
+    width: 365px;box-sizing: border-box;">
+                                <div class="pm--vipCard">
+                                    <div class="pm--vipCard__title">
+                                        <img src="https://image.woshipm.com/2023/05/19/de725b98-f62f-11ed-adbb-00163e0b5ff3.png">起点课堂会员权益
+                                    </div>
+                                    <div class="pm--vipCard__list">
+                                        <div class="pm--vipCard__item">
+                                            <img width="24" src="https://image.woshipm.com/2023/05/19/dfe517e2-f62d-11ed-bbb6-00163e0b5ff3.png"/>职业体系课特权
+                                        </div>
+                                        <div class="pm--vipCard__item">
+                                            <img width="24" src="https://image.woshipm.com/2023/05/19/ebb5071c-f62d-11ed-bbb6-00163e0b5ff3.png"/>线下行业大会特权
+                                        </div>
+                                        <div class="pm--vipCard__item">
+                                            <img width="24" src="https://image.woshipm.com/2023/05/19/c9756278-f62d-11ed-94e0-00163e0b5ff3.png"/>个人IP打造特权
+                                        </div>
+                                        <div class="pm--vipCard__item">
+                                            <img width="24" src="https://image.woshipm.com/2023/05/19/f64625a8-f62d-11ed-bbb6-00163e0b5ff3.png"/>30+门专项技能课
+                                        </div>
+                                        <div class="pm--vipCard__item">
+                                            <img width="20" src="https://image.woshipm.com/2023/05/19/0148a02a-f62e-11ed-96ae-00163e0b5ff3.png"/>1300+专题课程
+                                        </div>
+                                        <div class="pm--vipCard__item">
+                                            <img width="24" src="https://image.woshipm.com/2023/05/19/25fc8396-f62e-11ed-adbb-00163e0b5ff3.png"/>12场职场软技能直播
+                                        </div>
+                                        <div class="pm--vipCard__item">
+                                            <img width="24" src="https://image.woshipm.com/2023/05/19/1d4ecd4e-f62e-11ed-adbb-00163e0b5ff3.png"/>12场求职辅导直播
+                                        </div>
+                                        <div class="pm--vipCard__item">
+                                            <img width="24" src="https://image.woshipm.com/2023/05/19/30793c56-f62e-11ed-adbb-00163e0b5ff3.png"/>12场专业技能直播
+                                        </div>
+                                        <div class="pm--vipCard__item">
+                                            <img width="24" src="https://image.woshipm.com/2023/05/19/15fae604-f62e-11ed-bbb6-00163e0b5ff3.png"/>会员专属社群
+                                        </div>
+                                        <div class="pm--vipCard__item">
+                                            <img width="24" src="https://image.woshipm.com/2023/05/19/0e3283be-f62e-11ed-8df9-00163e0b5ff3.png"/>荣耀标识
+                                        </div>
+                                    </div>
+                                    <div class="pm--vipCard__button">
+                                        <a href="https://vip.qidianla.com/member.html" target="_blank">{{ userInfo.member ? '查看权益' : '开通会员' }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <metabar-notice :islogin="islogin"></metabar-notice>
+                        <div class="pm--metabar__dropdown u-flex u-relative">
+                            <span @click="showLoginForm" class="u-flex el-button el-button--primary el-button--mini" style="padding-right: 5px;font-size: 14px;padding-left: 13px;">
+                                <svg class="svgIcon-use" width="18" height="17" viewBox="0 0 18 17" style="width: 13px;fill: white;margin-right: 6px;">
+                                    <path d="M17.831,3.950 L9.184,12.519 C9.113,12.590 9.024,12.641 8.927,12.667 L4.754,13.785 C4.705,13.798 4.655,13.805 4.603,13.805 C4.450,13.805 4.301,13.743 4.193,13.635 C4.047,13.489 3.992,13.275 4.048,13.078 L5.219,8.984 C5.246,8.891 5.296,8.805 5.366,8.736 L14.013,0.165 C14.122,0.058 14.267,-0.002 14.421,-0.002 C14.575,-0.002 14.720,0.058 14.829,0.165 L17.831,3.141 C17.940,3.249 18.000,3.393 18.000,3.545 C18.000,3.698 17.940,3.842 17.831,3.950 ZM8.156,11.689 L6.199,9.750 L5.436,12.419 L8.156,11.689 ZM14.421,1.378 L6.902,8.830 L9.088,10.997 L16.607,3.546 L14.421,1.378 ZM1.153,2.286 L1.153,14.895 C1.153,15.425 1.588,15.855 2.122,15.855 L14.732,15.855 C15.267,15.855 15.701,15.425 15.701,14.895 L15.701,10.476 L16.855,10.476 L16.855,14.895 C16.855,16.055 15.902,16.998 14.732,16.998 L2.122,16.998 C0.952,16.998 -0.000,16.055 -0.000,14.895 L-0.000,2.286 C-0.000,1.126 0.952,0.183 2.122,0.183 L9.326,0.183 L9.326,1.326 L2.122,1.326 C1.588,1.326 1.153,1.756 1.153,2.286 Z"></path>
+                                </svg>
+                                发布
+                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="unfold12-icon" style="margin-right: 0; margin-left: 8px;">
+                                    <path d="M2.45025 4.82383C2.17422 4.49908 2.40501 4 2.83122 4H9.16878C9.59499 4 9.82578 4.49908 9.54975 4.82382L6.38097 8.5518C6.1813 8.7867 5.8187 8.7867 5.61903 8.5518L2.45025 4.82383Z" fill="white" data-v-3a3133c9=""></path>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="pm--metabarItem u-flex u-paddingLeft20">
+                            <span @click="showLoginForm" class="item">
+                                注册 | 登录
+                                
+                                <div class="login-popover">
+                                    <div class="login-guide-wrap">
+                                        <div class="login-guide-title">登录人人都是产品经理即可获得以下权益</div>
+                                        <ul class="login-guide-list">
+                                            <li class="login-guide-list-item">
+                                                <div class="login-guide-icon-wrap">
+                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="login-guide-icon">
+                                                        <path d="M4.62218 2.68165C3.64897 2.29236 2.59033 3.0091 2.59033 4.05728V13.961C2.59033 14.2639 2.77476 14.5363 3.05601 14.6488L8.88416 16.98C9.59939 17.2661 10.3973 17.2661 11.1125 16.98L16.9406 14.6488C17.2219 14.5363 17.4063 14.2639 17.4063 13.961V4.05728C17.4063 3.0091 16.3477 2.29236 15.3745 2.68165L11.1125 4.38644C10.3973 4.67253 9.59939 4.67253 8.88416 4.38644L4.62218 2.68165Z" stroke="currentColor" stroke-width="1.2"></path>
+                                                        <path d="M9.99609 7.42676V14.094" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"></path>
+                                                    </svg>
+                                                </div>
+                                                <span class="login-guide-text">关注优质作者</span>
+                                            </li>
+                                            <li class="login-guide-list-item">
+                                                <div class="login-guide-icon-wrap">
+                                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="login-guide-icon">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99999 3.37781L7.26101 6.9014C7.15913 7.10768 6.96219 7.25119 6.73392 7.28433L2.84544 7.84938L5.65897 10.5919C5.65903 10.592 5.6589 10.5919 5.65897 10.5919C5.82418 10.7529 5.89936 10.9849 5.8605 11.2116L5.19624 15.0845L8.67423 13.256C8.87818 13.1488 9.12181 13.1488 9.32576 13.256L12.8037 15.0845L12.1395 11.2117C12.1006 10.9849 12.1756 10.7531 12.3408 10.5921C12.3409 10.592 12.3408 10.5922 12.3408 10.5921L15.1545 7.84938L11.2663 7.28437C11.038 7.25122 10.8409 7.10782 10.739 6.90153L8.99999 3.37781ZM9.26883 2.83308C9.26888 2.83298 9.26878 2.83318 9.26883 2.83308V2.83308ZM9.62775 2.39022C9.37097 1.86993 8.62901 1.86993 8.37224 2.39022L6.43408 6.3174L2.10014 6.94718C1.52608 7.03061 1.29661 7.73615 1.71217 8.14119C1.71216 8.14118 1.71219 8.14121 1.71217 8.14119L4.84822 11.1981L4.10789 15.5145C4.00989 16.0863 4.61 16.5224 5.12357 16.2525L8.99999 14.2145L12.8764 16.2525C13.3899 16.5224 13.9901 16.0863 13.8921 15.5146L13.1518 11.1981L16.2877 8.14126C16.7035 7.73618 16.4739 7.0306 15.8999 6.94718L11.5659 6.3174L9.62775 2.39022ZM4.96134 11.3084C4.96141 11.3084 4.96128 11.3083 4.96134 11.3084V11.3084Z" fill="currentColor"></path>
+                                                    </svg>
+                                                </div>
+                                                <span class="login-guide-text">收藏优质内容</span>
+                                            </li>
+                                            <li class="login-guide-list-item">
+                                                <div class="login-guide-icon-wrap">
+                                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="login-guide-icon">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.1337 10.5801C12.4205 10.5801 12.653 10.8125 12.653 11.0993V11.8658H13.4194C13.7062 11.8658 13.9387 12.0983 13.9387 12.385C13.9387 12.6718 13.7062 12.9043 13.4194 12.9043H12.1337C11.847 12.9043 11.6145 12.6718 11.6145 12.385V11.0993C11.6145 10.8125 11.847 10.5801 12.1337 10.5801Z" fill="currentColor"></path>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M2.05225 4.64889C2.05225 3.21507 3.21458 2.05273 4.6484 2.05273H11.4231C12.8569 2.05273 14.0193 3.21507 14.0193 4.64889V9.32197H12.9808V4.64889C12.9808 3.7886 12.2834 3.0912 11.4231 3.0912H4.6484C3.78811 3.0912 3.09071 3.7886 3.09071 4.64889V13.3522C3.09071 14.2125 3.78811 14.9099 4.6484 14.9099H12.2143V15.9483H4.6484C3.21459 15.9483 2.05225 14.786 2.05225 13.3522V4.64889Z" fill="currentColor"></path>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.214 9.51893C10.7255 9.51893 9.51893 10.7255 9.51893 12.214C9.51893 13.7024 10.7255 14.909 12.214 14.909C13.7024 14.909 14.909 13.7024 14.909 12.214C14.909 10.7255 13.7024 9.51893 12.214 9.51893ZM8.48047 12.214C8.48047 10.152 10.152 8.48047 12.214 8.48047C14.2759 8.48047 15.9475 10.152 15.9475 12.214C15.9475 14.2759 14.2759 15.9475 12.214 15.9475C10.152 15.9475 8.48047 14.2759 8.48047 12.214Z" fill="currentColor"></path>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.82129 5.4372C4.82129 5.15044 5.05376 4.91797 5.34052 4.91797L10.7306 4.91797C11.0174 4.91797 11.2499 5.15044 11.2499 5.4372C11.2499 5.72396 11.0174 5.95643 10.7306 5.95643L5.34052 5.95643C5.05376 5.95643 4.82129 5.72396 4.82129 5.4372Z" fill="currentColor"></path>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.78394 8.35712C4.78394 8.07035 5.01641 7.83789 5.30317 7.83789L8.03531 7.83791C8.32208 7.83791 8.55454 8.07038 8.55454 8.35715C8.55454 8.64391 8.32207 8.87637 8.03531 8.87637L5.30316 8.87635C5.0164 8.87635 4.78393 8.64388 4.78394 8.35712Z" fill="currentColor"></path>
+                                                    </svg>
+                                                </div>
+                                                <span class="login-guide-text">查阅浏览足迹</span>
+                                            </li>
+                                            <li class="login-guide-list-item">
+                                                <div class="login-guide-icon-wrap">
+                                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="login-guide-icon">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.21627 3.23729H2.91894L2.91894 14.2645H5.21627V3.23729ZM2.91894 2.31836C2.41142 2.31836 2 2.72978 2 3.23729V14.2645C2 14.772 2.41142 15.1835 2.91894 15.1835H5.21627C5.72379 15.1835 6.13521 14.772 6.13521 14.2645V3.23729C6.13521 2.72978 5.72379 2.31836 5.21627 2.31836H2.91894Z" fill="currentColor"></path>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.43258 3.23729H6.13524L6.13524 14.2645H8.43258V3.23729ZM6.13524 2.31836C5.62773 2.31836 5.21631 2.72978 5.21631 3.23729V14.2645C5.21631 14.772 5.62773 15.1835 6.13524 15.1835H8.43258C8.9401 15.1835 9.35152 14.772 9.35152 14.2645V3.23729C9.35152 2.72978 8.9401 2.31836 8.43258 2.31836H6.13524Z" fill="currentColor"></path>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.0205 3.1255L9.80149 3.7201L12.6555 14.3716L14.8746 13.777L12.0205 3.1255ZM9.56365 2.83247C9.07343 2.96383 8.78251 3.46772 8.91386 3.95794L11.7679 14.6094C11.8993 15.0996 12.4032 15.3906 12.8934 15.2592L15.1124 14.6646C15.6027 14.5333 15.8936 14.0294 15.7622 13.5391L12.9082 2.88767C12.7768 2.39744 12.2729 2.10653 11.7827 2.23788L9.56365 2.83247Z" fill="currentColor"></path>
+                                                    </svg>
+                                                </div>
+                                                <span class="login-guide-text">免费发布作品</span>
+                                            </li>
+                                            <li class="login-guide-list-item">
+                                                <div class="login-guide-icon-wrap">
+                                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="login-guide-icon">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.2368 3.03451C12.587 2.18471 11.3966 2.05398 10.5779 2.74252L8.99865 4.07065L7.41943 2.74252C6.60071 2.05398 5.41026 2.18471 4.76048 3.03451C4.40851 3.49484 4.28737 4.07174 4.38041 4.61328H3.42708C2.6907 4.61328 2.09375 5.21023 2.09375 5.94661V7.78026C2.09375 8.50852 2.67761 9.10041 3.40278 9.11338V14.285C3.40278 15.3896 4.29821 16.285 5.40278 16.285H12.5945C13.6991 16.285 14.5945 15.3896 14.5945 14.285V9.11342C15.3209 9.10187 15.9062 8.50942 15.9062 7.78026V5.94661C15.9062 5.21024 15.3093 4.61328 14.5729 4.61328H13.6169C13.7099 4.07174 13.5888 3.49484 13.2368 3.03451ZM12.61 4.61328C12.7209 4.3068 12.6796 3.95035 12.4715 3.67815C12.1572 3.26708 11.5813 3.20384 11.1853 3.53691L9.90541 4.61328H12.61ZM8.09189 4.61328L6.81202 3.53691C6.41598 3.20384 5.84013 3.26708 5.52581 3.67815C5.31768 3.95035 5.27642 4.3068 5.38727 4.61328H8.09189ZM3.09375 5.94661C3.09375 5.76252 3.24299 5.61328 3.42708 5.61328H8.49863V8.11359H3.42708C3.24299 8.11359 3.09375 7.96435 3.09375 7.78026V5.94661ZM9.49863 8.11359V5.61328H14.5729C14.757 5.61328 14.9062 5.76252 14.9062 5.94661V7.78026C14.9062 7.96435 14.757 8.11359 14.5729 8.11359H9.49863ZM4.40278 9.11719H8.49863L8.49863 15.285H5.40278C4.85049 15.285 4.40278 14.8373 4.40278 14.285V9.11719ZM9.49863 9.11719L9.49863 15.285H12.5945C13.1468 15.285 13.5945 14.8373 13.5945 14.285V9.11719H9.49863Z" fill="currentColor"></path>
+                                                    </svg>
+                                                </div>
+                                                <span class="login-guide-text">参与提问答疑</span>
+                                            </li>
+                                            <li class="login-guide-list-item">
+                                                <div class="login-guide-icon-wrap">
+                                                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="user-level-icon login-guide-icon">
+                                                        <path d="M17.2673 10.1562H19.7673V12.6562" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        <path d="M8.5625 8.25V18.375C8.5625 18.9273 9.01022 19.375 9.5625 19.375H20.4375" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        <path d="M10.5625 16.0938L13.888 12.36L16.0216 14.2603L18.9739 10.9455" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    </svg>
+                                                </div>
+                                                <span class="login-guide-text">交流互动学习</span>
+                                            </li>
+                                        </ul>
+                                        <button type="button" class="login-guide-login-button" @click.stop="showLoginForm">
+                                            <span>立即登录
+                                            </span>
+                                        </button>
+                                        <div class="login-guide-register">
+                                            首次使用？
+                                            <div class="login-guide-register-button" @click.stop="showLoginForm">点我注册
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="main-content" data-dts-page="article_detail_normal" data-dts-event-info='{"article_id":5107308}'>
+                <div class="container">
+                    <div class="article--heroAd js-star" data-id="16"></div>
+                    <div class="home-block">
+                        <div class="u-width850">
+                            <div class="article--wrapper u-backgroundColorWhite u-rounded u-shadowed">
+                                <h2 class="article--title">如何设计出一个实用高效的埋点管理系统？</h2>
+                                <div class="stream-list-meta artilce--meta2">
+                                    <div class="u-flex0">
+                                        <a target="_blank" class="u-flex" href="https://www.woshipm.com/u/937570">
+                                            <img src="https://static.woshipm.com/view/woshipm_api_def_20251007140831_7710.jpeg?imageView2/1/w/72/h/72/q/100" alt="" height="36" width="36" class="avatar">
+                                        </a>
+                                    </div>
+                                    <div class="u-flex1">
+                                        <div class="author u-flex" data-id="937570">
+                                            <a target="_blank" class="ui-captionStrong" href="https://www.woshipm.com/u/937570">产品人走专业派</a>
+                                            <el-tooltip class="newusertagIcon icon-num-1101" effect="dark" content="普通作者" placement="top">
+                                                <img src="https://static.woshipm.com/tag/1101_1@2x.png " width=16 @click="goVip({parentCode: 1100})"/>
+                                            </el-tooltip>
+                                            <sub-button :author="937570" :status="isFollowing" @subauthorchild="subauthor"/>
+                                        </div>
+                                        <div class="meta--sup">
+                                            <time>2021-08-25</time>
+                                            <div class="meta--sup__right">
+                                                3 评论
+                                    <span class="dot"></span>
+                                                16153 浏览
+                                    <span class="dot"></span>
+                                                57 收藏
+                                    <span class="dot"></span>
+                                                <el-tooltip class="item" effect="dark" content="预计阅读时间 14 分钟" placement="top">
+                                                    <span>14 分钟</span>
+                                                </el-tooltip>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="article-topAd js-star js-star-25" data-id="3"></div>
+                                <div class="article--content grap">
+                                    <div v-pre>
+                                        <blockquote>
+                                            <p>编辑导语：埋点管理系统的搭建在一定程度上解决了埋点设计管理混乱的问题，方便数据查询，提高了团队的沟通效率，进而推动整体业务项目的高效进行。本篇文章里，作者就如何设计一个高效便利的埋点管理系统做了总结，一起来看一下。</p>
+                                        </blockquote>
+                                        <p>
+                                            <img data-action="zoom" loading="lazy" decoding="async" class="size-full wp-image-5109808 aligncenter" src="https://image.woshipm.com/wp-files/2021/08/BOtniOdRkTK5h5gIDQJK.jpg" alt="" width="900" height="420"/>
+                                        </p>
+                                        <h2 id="toc-1" class="jltoc--item">一、为什么要做埋点管理系统？</h2>
+                                        <p>如果你是一名数据分析师，是否有过这样的经历：</p>
+                                        <p>当你需要查询APP产品埋点数据的时候，你不得不经常找数据产品经理去确认是否已有埋点，埋了哪些字段，是否已有上报数据等。常常这些埋点事件元信息分散在多个产品经理手上，信息散乱，分析师使用埋点数据之前沟通成本极高，影响数据使用的效率……</p>
+                                        <p>不仅如此，如果遇到埋点数据异常，追溯埋点历史问题过程也是非常的漫长，需要数据产品经理去跟业务产品经理确认埋点需求的版本，然后数据产品经理确认埋点设计需求的批次，然后给到开发，开发同事再去查找问题……</p>
+                                        <p>
+                                            <strong>以上种种问题一直是困扰着我们埋点工作的痛点。埋点场景的痛点我总结为以下5点：</strong>
+                                        </p>
+                                        <ol>
+                                            <li>埋点需求及埋点设计文档管理散乱，产品、开发、测试协同沟通效率低下，严重影响工作效率。</li>
+                                            <li>埋点事件元信息管理散乱，常是分布在多个产品经理手上，分析师使用埋点数据时需要查询埋点需求及埋点事件的元信息这个过程链路长，沟通成本非常高，埋点元信息使用查询极其不便利。</li>
+                                            <li>若出现埋点数据异常问题，若开发同事需要追溯埋点历史数据，则更是需要有当时的埋点需求批次和埋点设计文档作为辅助，元信息管理散乱，极其影响debug的效率。</li>
+                                            <li>非可视化测试，验收埋点难度太大。每次都要跑去数据库了查询，对于没有写SQL基础的业务经理来说，验收埋点数据的效率就会比埃及地下。</li>
+                                            <li>数据校验流程混乱，版本管理难度大，开发同学常常要自己开发一个后台管理功能来管理埋点发布或下线的版本。</li>
+                                        </ol>
+                                        <h2 id="toc-2" class="jltoc--item">二、埋点管理系统是什么？</h2>
+                                        <p>
+                                            <strong>埋点管理系统本质是解决数据采集及数据使用场景问题的业务系统，业务方则是数据产品、数据开发工程师、数据分析师等数据团队的人员。</strong>
+                                        </p>
+                                        <p>比较常见的例子，数据分析师在业务处于快速发展的阶段大概率只让你取数，未必让你真正去做业务数据分析的活儿。</p>
+                                        <p>等数据取数这类需求达到一定的数量，老板才会想着去开发可视化类的取数工具，帮助数据分析师从大量的数据查询和报表开发的工作解脱出来，去做更加有价值的业务专题分析的工作。</p>
+                                        <p>
+                                            回到我们的主题，埋点管理系统也常常会等到埋点需求非常多，从埋点需求产出端、到埋点需求使用方都感觉到这个合作流程已经影响了整体的工作效率的时候，埋点管理系统才会被老板想到，这个工具是否可以替代原本的零散和低效的协同模式来提高大家的工作效率。所以，<strong>埋点管理系统本身是一个提升数据同事工作效率的工具</strong>
+                                            <strong>。</strong>
+                                        </p>
+                                        <p>
+                                            <strong>埋点管理系统能解决问题主要有以下5点：</strong>
+                                        </p>
+                                        <ol>
+                                            <li>解决了埋点需求及埋点设计管理散乱，产品团队、开发团及测试团队，数据应用团队的协同沟通效率低下问题。</li>
+                                            <li>解决了数据应用场景中需要高频及便利地查询查询埋点事件元信息问题。</li>
+                                            <li>解决了开发同事在遇到埋点数据异常需要追溯历史埋点的历史文档寻找的版本管理问题。</li>
+                                            <li>通过可视化抓包，解决了埋点数据验收的重度依赖数据库查询的相对低效的方法。</li>
+                                            <li>通过可视化对比校验和发布／下线能力，解决了开发同事单独管理埋点需求的版本及发布场景问题，并有明确的数据校验流程，从而间接提升数据质量的管理。</li>
+                                        </ol>
+                                        <h2 id="toc-3" class="jltoc--item">三、如何设计埋点管理系统？</h2>
+                                        <h3>1. 业务流程确认</h3>
+                                        <p>说了埋点管理系统能解决的问题，接下来聊聊埋点管理系统长啥样，如何才能设计出解决我们以上问题的埋点管理系统。在此之前，我们先了解埋点场景的业务流程：</p>
+                                        <p>
+                                            <img data-action="zoom" loading="lazy" decoding="async" class="aligncenter" src="https://image.woshipm.com/wp-files/2021/08/k7J8254AtvueYC0XUYsD.png" alt="" width="662" height="684"/>
+                                        </p>
+                                        <p style="text-align: center;">图一：埋点业务流程图1</p>
+                                        <h3>2. 系统功能确认</h3>
+                                        <p>业务流程确认了，我们就在对应的业务流程上增加产品功能模块去承载每个业务流程节点的需求，如下图：</p>
+                                        <p>
+                                            <img data-action="zoom" loading="lazy" decoding="async" class="aligncenter" src="https://image.woshipm.com/wp-files/2021/08/S9m3hO3uyd88fXPbeNhk.png" alt="" width="661" height="556"/>
+                                        </p>
+                                        <p style="text-align: center;">图二：埋点业务流程图2</p>
+                                        <h3>3. 事件模型确认</h3>
+                                        <p>在了解系统功能设计之前，我们先了解一下埋点管理系统里涉及到的全部管理对象及对象之间的关系。</p>
+                                        <p>埋点管理系统一共涉及到四个对象，分别是应用、埋点需求批次、埋点事件、事件属性。他们之间的关系是自上而下的逻辑关系。</p>
+                                        <p>
+                                            <img data-action="zoom" loading="lazy" decoding="async" class="aligncenter" src="https://image.woshipm.com/wp-files/2021/08/J4xyBvFU1qJLl3fTk5Sl.png" alt="" width="664" height="600"/>
+                                        </p>
+                                        <p style="text-align: center;">图三：埋点事件模型图</p>
+                                        <h3>4. 系统功能架构设计</h3>
+                                        <p>通过埋点业务流程及事件模型的梳理，我们得出了多个系统功能模块，拆解出来的埋点系统功能结构如下图：</p>
+                                        <p>
+                                            <img data-action="zoom" loading="lazy" decoding="async" class="aligncenter" src="https://image.woshipm.com/wp-files/2021/08/HJjtwpn5AWEGzHKlSYWD.png" alt="" width="877" height="441"/>
+                                        </p>
+                                        <p style="text-align: center;">图四：埋点管理系统功能结构图</p>
+                                        <p>
+                                            <strong>下面我们将对系统的每个功能模块展开阐述：</strong>
+                                        </p>
+                                        <p>
+                                            <strong>1）应用管理</strong>
+                                        </p>
+                                        <p>应用管理功能主要是承载业务团队新增一个APP/小程序／H5／web端等业务产品对象，我们需要在系统里先创建一个新的埋点产品对象，然后才有后续增加的埋点需求及事件元信息等。</p>
+                                        <p>这个模块包含应用新增、删除、编辑等基础功能。产品团队需要负责的埋点产品都可以放在这里统一管理。</p>
+                                        <p>
+                                            <img data-action="zoom" loading="lazy" decoding="async" class="aligncenter" src="https://image.woshipm.com/wp-files/2021/08/hq0dbAfiTMHNgh6LM36d.jpeg" alt="" width="713" height="392"/>
+                                        </p>
+                                        <p style="text-align: center;">图五：应用管理列表图</p>
+                                        <p>
+                                            <strong>2）埋点需求管理</strong>
+                                        </p>
+                                        <p>埋点需求管理功能主要承载集中管理业务团队提过来给产品团队的埋点需求文档，这里可以创建需求、编辑需求、下钻需求、下线需求等。</p>
+                                        <p>在这里，需求按照批次来进行管理，每一个埋点需求都有一个唯一的批次号，挂载到对应的应用及版本上，并且点击单个埋点需求批次号，可以直接下钻到该埋点需求下的全部事件列表。</p>
+                                        <p>
+                                            <img data-action="zoom" loading="lazy" decoding="async" class="aligncenter" src="https://image.woshipm.com/wp-files/2021/08/l1WPIBOdzQhVUGxjvt5N.jpeg" alt="" width="711" height="396"/>
+                                        </p>
+                                        <p style="text-align: center;">图六：埋点需求管理列表图</p>
+                                        <p>
+                                            <strong>3）事件管理</strong>
+                                        </p>
+                                        <p>管理功能则承载来所有埋点需求拆解出来需要开发的埋点事件元信息，这里可以创建事件、编辑事件、下钻事件、搜索事件、下线事件等。</p>
+                                        <p>事件是埋点拆解的最小对象单元，在这里每个事件都要挂载在对应的埋点需求批次上，系统里没有独立自自己游荡的事件。这样所有的应用、埋点需求批次和事件都有了映射关系。当需要使用埋点数据时，先来埋点管理系统查找埋点需求批次，这种清晰的映射关系在查询埋点元信息时提供了高效的途径。</p>
+                                        <p>
+                                            <img data-action="zoom" loading="lazy" decoding="async" class="aligncenter" src="https://image.woshipm.com/wp-files/2021/08/OYiFim4CAXTUq7evgVta.jpeg" alt="" width="712" height="391"/>
+                                        </p>
+                                        <p style="text-align: center;">图七：事件管理列表图</p>
+                                        <p>
+                                            <strong>4）属性管理</strong>
+                                        </p>
+                                        <p>属性管理功能模块承载的是常用的有共性的属性。一个个独立的属性常用属性，比如用用户ID、用户客户端系统、在线时长等属性，可以在属性管理这里完成注册。</p>
+                                        <p>在用户新建事件时，可以直接引用已注册完成的属性绑定到事件上，减少用户填写事件属性信息时的大量重复填写工作。</p>
+                                        <p>
+                                            <strong>5）埋点校验</strong>
+                                        </p>
+                                        <p>走到这里，埋点已经开发完成了，到了测试、验收、上线的环节。这里的埋点校验包含两部分，可视化抓包测试及开发环境和测试环境的信息对比。完成这两个环节之后，开发同事才可以把埋点发布到正式环境。</p>
+                                        <p>
+                                            <strong>可视化抓包测试：</strong>
+                                        </p>
+                                        <p>可视化抓包功能页主要提供给产品经理和测试同学可以现场抽样测试事件数据，检查上报的属性是否已经完整，属性值是否准确。</p>
+                                        <p>
+                                            <img data-action="zoom" loading="lazy" decoding="async" class="aligncenter" src="https://image.woshipm.com/wp-files/2021/08/95DBym9Lk5j01MH6VDXf.jpeg" alt="" width="718" height="502"/>
+                                        </p>
+                                        <p style="text-align: center;">图八：埋点数据实时抓包图</p>
+                                        <p>
+                                            <strong>对比与同步：</strong>
+                                        </p>
+                                        <p>在线对比和发布功能页则是承载了开发童鞋对比生产环境和测试环境埋点元信息的差异之处，帮助快速确认已经进行了变更处理之处。及支持开发童鞋在线可视化发布埋点事件，便捷高效。</p>
+                                        <p>
+                                            <img data-action="zoom" loading="lazy" decoding="async" class="aligncenter" src="https://image.woshipm.com/wp-files/2021/08/Rq8qgLM9s5PCsPCUL56h.jpeg" alt="" width="716" height="395"/>
+                                        </p>
+                                        <p style="text-align: center;">图九：埋点需求对比及同步功能图</p>
+                                        <p>
+                                            <strong>6）埋点监控</strong>
+                                        </p>
+                                        <p>埋点监控功能承载的则是埋点管理系统全部埋点事件的及任务运行的结果监控。包括展示全部埋点应用统计数、埋点需求统计数、事件统计数、有效在线事件统计数、异常的埋点事件数、未处理的埋点需求／事件数等，是统计和展示整个系统管理对象及对象运行情况的监控功能模块。</p>
+                                        <p>方便参与埋点工作的同事了解整体产品的埋点任务运行情况，和及时发现埋点上报数据的异常情况。也是埋点管理系统的一个必不可少的模块。</p>
+                                        <h2 id="toc-4" class="jltoc--item">四、写在最后</h2>
+                                        <p>以上从埋点管理系统的定位和解决的痛点问题，及系统的建设过程给大家阐述一遍，希望能帮助大家在对埋点管理系统及建设有个相对完整的认识。</p>
+                                        <p>最后，总结几点系统建设过程中的思考分享给大家：</p>
+                                        <p>
+                                            <strong>1）</strong>
+                                            埋点管理系统是一个服务于数据团队但涉及合作团队较多的系统。在不同公司，可能埋点业务流程不一样，而我这里分享的是我经历过的埋点工作场景中协同效率比较高效的埋点业务流程，希望能提供参考借鉴。
+                                        </p>
+                                        <p>
+                                            <strong>2）</strong>
+                                            埋点需求批次跟应用版本号不完全保持一致，不要当作是形同对象而相互替代。因为很可能在后期版本增加早期发版的产品功能的埋点。如果当作同一个问题处理，将导致埋点需求管理能力可扩展性太弱，很快整个系统都陷入了管理瓶颈。
+                                        </p>
+                                        <p>
+                                            <strong>3）</strong>
+                                            埋点管理系统真实可以提升业务、产品、开发、数据分析多个团队的协同效率，用起来非常爽，能早建设尽早建设。
+                                        </p>
+                                        <p>此处完结。</p>
+                                        <p>&nbsp;</p>
+                                        <p>本文由 @九果女孩Maky 原创发布于人人都是产品经理，未经许可，禁止转载</p>
+                                        <p>题图来自Pexels，基于 CC0 协议</p>
+                                    </div>
+                                    <div class="article--bottomActions">
+                                        <donate-button author="937570" post_id="5107308" avatar="https://static.woshipm.com/view/woshipm_api_def_20251007140831_7710.jpeg"></donate-button>
+                                        <button class="button button--toggle article--bottomAction" data-dts-event-location="favorite_article" data-dts-event-info='{"article_id":5107308}' @click="bookmark" :class="{ active:isMarked }">
+                                            <svg class="svgIcon--use" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2609" width="16" height="16">
+                                                <path d="M565.273 34.627L677.369 272.17c8.706 18.32 25.411 31.051 44.823 33.996l250.776 38.081c48.698 7.411 68.225 70.046 32.934 105.98L824.407 635.164c-13.998 14.23-20.352 34.815-17.059 54.935l42.82 261.127c8.346 50.696-42.643 89.452-86.226 65.519L539.634 893.474c-17.286-9.526-37.992-9.526-55.278 0l-224.314 123.27c-43.583 23.934-94.572-14.822-86.22-65.518L216.638 690.1c3.32-20.12-3.089-40.705-17.087-54.935L18.11 450.227c-35.285-35.934-15.818-98.574 32.934-105.98l250.75-38.081c19.35-2.94 36.082-15.675 44.756-33.996L458.673 34.627c21.825-46.168 84.836-46.168 106.6 0z" fill="#ffffff"></path>
+                                            </svg>
+                                            <span class="default">收藏</span>
+                                            <span class="active">已收藏</span>
+                                            <span class="count" v-if="!!postmeta.bookmark">{{ postmeta.bookmark }}</span>
+                                        </button>
+                                        <button class="button button--toggle article--bottomAction" data-dts-event-location="like_article" data-dts-event-info='{"article_id":5107308}' @click="postlike" :class="{ active:isLiked }">
+                                            <svg class="svgIcon--use" viewBox="0 0 1028 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3817" width="16" height="16">
+                                                <path d="M478.277632 264.88832C659.364864-28.16 1028.096 88.004608 1028.096 404.086784c0 167.119872-96.451584 299.108352-253.950976 398.988288-53.8112 34.1248-111.1808 62.082048-168.53504 84.415488-20.087808 7.82336-38.781952 14.39744-55.63392 19.781632-10.307584 3.293184-17.855488 5.49376-22.193152 6.651904a45.341696 45.341696 0 0 1-24.087552-0.196608c-4.31104-1.227776-11.83232-3.54816-22.112256-7.001088-16.818176-5.648384-35.478528-12.50304-55.53152-20.606976-57.255936-23.138304-114.526208-51.75296-168.23808-86.290432C100.463616 698.655744 4.096 567.63392 4.096 404.086784 4.096 88.11008 368.360448-26.631168 553.612288 264.40704l-75.334656 0.48128z" fill="#ffffff" p-id="3818"></path>
+                                            </svg>
+                                            <span class="default">点赞</span>
+                                            <span class="active">已赞</span>
+                                            <span class="count" v-if="!!postmeta.bookmark">{{ postmeta.postlike }}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <section class="pm-adTitle trackRead">更多精彩内容，请关注人人都是产品经理微信公众号或下载App</section>
+                                <div class="article-bottomAd js-star js-star-1" data-id="1"></div>
+                                <div class="article--actions">
+                                    <div class="taglist" data-dts-event-location="tag_items">
+                                        <a href="https://www.woshipm.com/tag/1%e5%b9%b4" rel="tag">1年</a>
+                                        <a href="https://www.woshipm.com/tag/%e5%88%9d%e7%ba%a7" rel="tag">初级</a>
+                                        <a href="https://www.woshipm.com/tag/%e5%9f%8b%e7%82%b9%e7%b3%bb%e7%bb%9f" rel="tag">埋点系统</a>
+                                    </div>
+                                    <div class="article--actions__right">
+                                        <share-button link="https://www.woshipm.com/data-analysis/5107308.html" title="如何设计出一个实用高效的埋点管理系统？" image="https://image.woshipm.com/wp-files/2021/08/BOtniOdRkTK5h5gIDQJK.jpg"></share-button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="postFooterInfo u-marginTop20 u-backgroundColorWhite u-rounded u-shadowed">
+                                <div class="u-flex">
+                                    <div class="u-flex0">
+                                        <a href="https://www.woshipm.com/u/937570" target="_blank">
+                                            <img src="https://static.woshipm.com/view/woshipm_api_def_20251007140831_7710.jpeg?imageView2/1/w/150/h/150/q/100" alt="" height="75" width="75" class="avatar">
+                                        </a>
+                                    </div>
+                                    <div class="u-flex1 u-paddingLeft15 u-overflowHidden">
+                                        <div class="authorCard--content">
+                                            <span class="authorCard--title u-flex">
+                                                <a href="https://www.woshipm.com/u/937570" target="_blank">产品人走专业派</a>
+                                                <el-tooltip class="newusertagIcon" effect="dark" content="实名认证" placement="top">
+                                                    <img src="https://static.woshipm.com/tag/1601_1@2x.png " class="icon-height20" @click="goVip({parentCode: 1600})"/>
+                                                </el-tooltip>
+                                                <el-tooltip class="newusertagIcon" effect="dark" content="普通作者" placement="top">
+                                                    <img src="https://static.woshipm.com/tag/1101_1@2x.png " class="icon-height20" @click="goVip({parentCode: 1100})"/>
+                                                </el-tooltip>
+                                                <sub-button :author="937570" :status="isFollowing" @subauthorchild="subauthor"/>
+                                            </span>
+                                        </div>
+                                        <div class="authorCard--description">超过10年大厂数据产品经验</div>
+                                        <div class="authorCard--meta">
+                                            <span class="authorInfo-item">1篇作品</span>
+                                            <span class="dot"></span>
+                                            <span class="authorInfo-item">16163总阅读量</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relate-text u-shadowed u-rounded">
+                                <nav class="stream-video--title">
+                                    <span class="title">为你推荐</span>
+                                </nav>
+                                <div class="relate-text__list" data-dts-event-location="recom_article_module">
+                                    <div class="relate-text__item">
+                                        <div class="content">
+                                            <div class="title">
+                                                <a href="https://www.woshipm.com/ai/5954334.html" target="_blank" title="聊一聊AI技术在“政府热线场景”中的运用，内含实际落地案例~">聊一聊AI技术在“政府热线场景”中的运用，内含实际落地案例~</a>
+                                            </div>
+                                            <div class="meta">
+                                                12-07<span class="dot"></span>
+                                                4822 浏览
+                                            </div>
+                                        </div>
+                                        <a href="https://www.woshipm.com/ai/5954334.html" target="_blank" class="img-link" title="聊一聊AI技术在“政府热线场景”中的运用，内含实际落地案例~">
+                                            <img class="cover" src="https://image.woshipm.com/2023/05/06/c97d24e0-ec00-11ed-96ae-00163e0b5ff3.jpg!/both/120x80" alt="聊一聊AI技术在“政府热线场景”中的运用，内含实际落地案例~">
+                                        </a>
+                                    </div>
+                                    <div class="relate-text__item">
+                                        <div class="content">
+                                            <div class="title">
+                                                <a href="https://www.woshipm.com/share/5901340.html" target="_blank" title="新用户激活的终极目标：找寻“Aha时刻”">新用户激活的终极目标：找寻“Aha时刻”</a>
+                                            </div>
+                                            <div class="meta">
+                                                09-11<span class="dot"></span>
+                                                3153 浏览
+                                            </div>
+                                        </div>
+                                        <a href="https://www.woshipm.com/share/5901340.html" target="_blank" class="img-link" title="新用户激活的终极目标：找寻“Aha时刻”">
+                                            <img class="cover" src="https://image.woshipm.com/2023/04/14/98eaf8f4-daa1-11ed-9b82-00163e0b5ff3.png!/both/120x80" alt="新用户激活的终极目标：找寻“Aha时刻”">
+                                        </a>
+                                    </div>
+                                    <div class="relate-text__item js-star" data-id="12"></div>
+                                    <div class="relate-text__item">
+                                        <div class="content">
+                                            <div class="title">
+                                                <a href="https://www.woshipm.com/share/5914948.html" target="_blank" title="年轻人假期花式搞钱：当伴娘、摆地摊、喂宠物、APP地推、打临工">年轻人假期花式搞钱：当伴娘、摆地摊、喂宠物、APP地推、打临工</a>
+                                            </div>
+                                            <div class="meta">
+                                                10-06<span class="dot"></span>
+                                                2608 浏览
+                                            </div>
+                                        </div>
+                                        <a href="https://www.woshipm.com/share/5914948.html" target="_blank" class="img-link" title="年轻人假期花式搞钱：当伴娘、摆地摊、喂宠物、APP地推、打临工">
+                                            <img class="cover" src="https://image.woshipm.com/2023/07/07/4732f132-1c97-11ee-94c6-00163e0b5ff3.jpg!/both/120x80" alt="年轻人假期花式搞钱：当伴娘、摆地摊、喂宠物、APP地推、打临工">
+                                        </a>
+                                    </div>
+                                    <div class="relate-text__item">
+                                        <div class="content">
+                                            <div class="title">
+                                                <a href="https://www.woshipm.com/it/5768511.html" target="_blank" title="美团闪电仓抢滩即时零售，帮友商“训练”了合作商？">美团闪电仓抢滩即时零售，帮友商“训练”了合作商？</a>
+                                            </div>
+                                            <div class="meta">
+                                                03-01<span class="dot"></span>
+                                                2204 浏览
+                                            </div>
+                                        </div>
+                                        <a href="https://www.woshipm.com/it/5768511.html" target="_blank" class="img-link" title="美团闪电仓抢滩即时零售，帮友商“训练”了合作商？">
+                                            <img class="cover" src="https://image.woshipm.com/wp-files/2023/03/i2pAIzDgrLALO4BU4hOr.jpg!/both/120x80" alt="美团闪电仓抢滩即时零售，帮友商“训练”了合作商？">
+                                        </a>
+                                    </div>
+                                    <div class="relate-text__item">
+                                        <div class="content">
+                                            <div class="title">
+                                                <a href="https://www.woshipm.com/it/5859199.html" target="_blank" title="腾讯视频，最终还是走上了爱奇艺的路">腾讯视频，最终还是走上了爱奇艺的路</a>
+                                            </div>
+                                            <div class="meta">
+                                                07-03<span class="dot"></span>
+                                                6298 浏览
+                                            </div>
+                                        </div>
+                                        <a href="https://www.woshipm.com/it/5859199.html" target="_blank" class="img-link" title="腾讯视频，最终还是走上了爱奇艺的路">
+                                            <img class="cover" src="https://image.woshipm.com/2023/04/13/e19524d4-d9ee-11ed-bd74-00163e0b5ff3.jpg!/both/120x80" alt="腾讯视频，最终还是走上了爱奇艺的路">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fixed--posts"></div>
+                            <div class="u-backgroundColorWhite comments-area u-shadowed u-rounded">
+                                <div class="comment-list-header">
+                                    <span class="title">评论</span>
+                                </div>
+                                <div id="respond" class="respond respond-5107308" role="form">
+                                    <form action="https://www.woshipm.com/wp-comments-post.php" method="post" id="commentform" data-post="5107308" class="comment-form u-clearfix">
+                                        <div class="textarea--unlogin" @click="showLoginForm">评论请登录</div>
+                                        <div class="comment-form-bottom u-clearfix">
+                                            <input class="comment-submit u-floatRight" type="submit" value="发布" @click="showLoginForm" data-dts-event-location="comment" data-dts-event-info='{"article_id":5107308}'>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="commentshow">
+                                    <ol class="comment-list">
+                                        <li class="comment byuser comment-author-15842233366 even thread-even depth-1" id="li-comment-584838" itemtype="http://schema.org/Comment" itemscope="" itemprop="comment">
+                                            <div id="comment-584838" class="comment-block">
+                                                <div class="comment-avatar">
+                                                    <a href="https://www.woshipm.com/u/1531249" target="_blank">
+                                                        <img src="https://static.woshipm.com/passport_avatar_wx_20230731165713_3679.jpg?imageView2/1/w/80/h/80/q/100" alt="" height="40" width="40" class="avatar">
+                                                    </a>
+                                                </div>
+                                                <div class="comment-section">
+                                                    <div class="comment-info">
+                                                        <div class="comment-meta">
+                                                            <div class="comment-author" itemprop="author">
+                                                                <a href="https://www.woshipm.com/u/1531249" target="_blank">东北樱木花道🌟</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="comment-content" itemprop="description">
+                                                        <p>超级棒！！！</p>
+                                                    </div>
+                                                    <div class="comment-bottom">
+                                                        <span class="comment-time" itemprop="datePublished" datetime="2024-09-22T18:58:36+08:00">最近</span>
+                                                        <span class="comment-reply">来自辽宁</span>
+                                                        <span @click="moveForm" data-id="584838" class="comment-reply">回复</span>
+                                                        <span class="js-report-content" @click="showReport(584838)">
+                                                            <img src="//image.woshipm.com/more.svg" width="16">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- #comment-## -->
+                                        <li class="comment byuser comment-author-5731 odd alt thread-odd thread-alt depth-1" id="li-comment-517550" itemtype="http://schema.org/Comment" itemscope="" itemprop="comment">
+                                            <div id="comment-517550" class="comment-block">
+                                                <div class="comment-avatar">
+                                                    <a href="https://www.woshipm.com/u/906418" target="_blank">
+                                                        <img src="https://thirdwx.qlogo.cn/mmopen/4xibpdtfVHIpUqZZZkrww3RpOHcUb1XuXG4CTNgPcpLJUuibKN5yCpVUrfaxmvV7QicR0QIWK5e0XUQ0A8IaIhHkMq8Ye29BdIe/132" alt="" height="40" width="40" class="avatar">
+                                                    </a>
+                                                </div>
+                                                <div class="comment-section">
+                                                    <div class="comment-info">
+                                                        <div class="comment-meta">
+                                                            <div class="comment-author" itemprop="author">
+                                                                <a href="https://www.woshipm.com/u/906418" target="_blank">木辛臭</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="comment-content" itemprop="description">
+                                                        <p>请问，批量同步的功能是解决什么问题呢。谢谢回复</p>
+                                                    </div>
+                                                    <div class="comment-bottom">
+                                                        <span class="comment-time" itemprop="datePublished" datetime="2022-03-25T22:59:06+08:00">最近</span>
+                                                        <span class="comment-reply">来自广东</span>
+                                                        <span @click="moveForm" data-id="517550" class="comment-reply">回复</span>
+                                                        <span class="js-report-content" @click="showReport(517550)">
+                                                            <img src="//image.woshipm.com/more.svg" width="16">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- #comment-## -->
+                                        <li class="comment byuser comment-author-zmr even thread-even depth-1" id="li-comment-488335" itemtype="http://schema.org/Comment" itemscope="" itemprop="comment">
+                                            <div id="comment-488335" class="comment-block">
+                                                <div class="comment-avatar">
+                                                    <a href="https://www.woshipm.com/u/829195" target="_blank">
+                                                        <img src="https://static.woshipm.com/WX_U_201901_20190124140308_4180.jpg?imageView2/1/w/80/h/80/q/100" alt="" height="40" width="40" class="avatar">
+                                                    </a>
+                                                </div>
+                                                <div class="comment-section">
+                                                    <div class="comment-info">
+                                                        <div class="comment-meta">
+                                                            <div class="comment-author" itemprop="author">
+                                                                <a href="https://www.woshipm.com/u/829195" target="_blank">zmr</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="comment-content" itemprop="description">
+                                                        <p>很不错</p>
+                                                    </div>
+                                                    <div class="comment-bottom">
+                                                        <span class="comment-time" itemprop="datePublished" datetime="2021-10-29T18:14:23+08:00">最近</span>
+                                                        <span class="comment-reply">来自广东</span>
+                                                        <span @click="moveForm" data-id="488335" class="comment-reply">回复</span>
+                                                        <span class="js-report-content" @click="showReport(488335)">
+                                                            <img src="//image.woshipm.com/more.svg" width="16">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- #comment-## -->
+                                    </ol>
+                                    <nav class="commentnav" data-fuck="5107308"></nav>
+                                </div>
+                                <comment-report :show.sync="reportVisivle" :id="reportComment"></comment-report>
+                            </div>
+                            <div class="relatedPosts u-backgroundColorWhite u-rounded u-marginTop20 u-shadowed">
+                                <nav class="stream-video--title">
+                                    <span class="title">为你推荐</span>
+                                </nav>
+                                <div class="relatedPosts--list" data-dts-event-location="interested_items">
+                                    <div class="relatedPosts--half js-star relatedPosts--aladdin" data-id="11"></div>
+                                    <div class="relatedPosts--half">
+                                        <ul class="relatedPosts--group" data-dts-event-location="interested_items">
+                                            <li class="relatedPosts--item__small">
+                                                <div class="img">
+                                                    <a href="https://www.woshipm.com/it/5840803.html" target="_blank">
+                                                        <img src="https://image.woshipm.com/2023/04/13/603ef958-d9eb-11ed-a6e8-00163e0b5ff3.jpg!/both/130x88" width="130" height="88" alt="整个VR行业，都在指望着明天的苹果发布会">
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">
+                                                        <a href="https://www.woshipm.com/it/5840803.html" target="_blank">整个VR行业，都在指望着明天的苹果发布会</a>
+                                                    </div>
+                                                    <div class="meta">
+                                                        06-05<span class="dot"></span>
+                                                        1700 浏览
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="relatedPosts--item__small">
+                                                <div class="img">
+                                                    <a href="https://www.woshipm.com/pd/5784215.html" target="_blank">
+                                                        <img src="https://image.woshipm.com/wp-files/2023/03/YWBnfSepL9jPmZ6IWv1v.png!/both/130x88" width="130" height="88" alt="跨境电商海外仓（BMS篇）：拆解计费业务中的“万能公式”">
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">
+                                                        <a href="https://www.woshipm.com/pd/5784215.html" target="_blank">跨境电商海外仓（BMS篇）：拆解计费业务中的“万能公式”</a>
+                                                    </div>
+                                                    <div class="meta">
+                                                        03-17<span class="dot"></span>
+                                                        10224 浏览
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="relatedPosts--item__small">
+                                                <div class="img">
+                                                    <a href="https://www.woshipm.com/it/5847624.html" target="_blank">
+                                                        <img src="https://image.woshipm.com/wp-files/2023/06/XVpbbjnyMdoFyPeqYe9f.jpg!/both/130x88" width="130" height="88" alt="快团团本地生活“落地”，第一批商家已经吃到红利">
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">
+                                                        <a href="https://www.woshipm.com/it/5847624.html" target="_blank">快团团本地生活“落地”，第一批商家已经吃到红利</a>
+                                                    </div>
+                                                    <div class="meta">
+                                                        06-15<span class="dot"></span>
+                                                        3954 浏览
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <index-topic-card data-dts-event-location="recom_topic_module"/>
+                        </div>
+                        <aside class="u-width335 sidebar">
+                            <div class="js-sidebar">
+                                <widget-qrcode-card></widget-qrcode-card>
+                                <div class="widget u-backgroundColorWhite">
+                                    <div class="inner">
+                                        <div class="widget-title">
+                                            <span>快讯</span>
+                                            <div class="u-floatRight btn">
+                                                <a href="/digest" target="_blank">查看更多</a>
+                                            </div>
+                                        </div>
+                                        <digests></digests>
+                                    </div>
+                                </div>
+                                <div class="widget u-backgroundColorWhite" data-dts-event-location="hot_article_items">
+                                    <div class="inner">
+                                        <div class="widget-title">
+                                            <span>热门文章</span>
+                                        </div>
+                                        <ul class="widget-post-list--withImage">
+                                            <li class="widget-post-item--withImage">
+                                                <div class="img">
+                                                    <a href="https://www.woshipm.com/ai/6317876.html" target="_blank" title="别再发硬广被屏蔽了！我用腾讯元器捏了个“高情商嘴替”，私域互动翻倍">
+                                                        <img alt="别再发硬广被屏蔽了！我用腾讯元器捏了个“高情商嘴替”，私域互动翻倍" src="https://image.woshipm.com/2025/08/19/edd47568-7caf-11f0-a249-00163e09d72f.png!/both/100x60">
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">
+                                                        <a href="https://www.woshipm.com/ai/6317876.html" target="_blank" title="别再发硬广被屏蔽了！我用腾讯元器捏了个“高情商嘴替”，私域互动翻倍">别再发硬广被屏蔽了！我用腾讯元器捏了个“高情商嘴替”，私域互动翻倍</a>
+                                                    </div>
+                                                    <div class="meta">01-06</div>
+                                                </div>
+                                            </li>
+                                            <li class="widget-post-item--withImage">
+                                                <div class="img">
+                                                    <a href="https://www.woshipm.com/user-research/6316472.html" target="_blank" title="拒绝“自嗨式”做产品：AI 时代用户调研的 5 步实战闭环 + 避坑指南">
+                                                        <img alt="拒绝“自嗨式”做产品：AI 时代用户调研的 5 步实战闭环 + 避坑指南" src="https://image.woshipm.com/2026/01/04/d0f96824-e95e-11f0-a150-00163e09d72f.png!/both/100x60">
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">
+                                                        <a href="https://www.woshipm.com/user-research/6316472.html" target="_blank" title="拒绝“自嗨式”做产品：AI 时代用户调研的 5 步实战闭环 + 避坑指南">拒绝“自嗨式”做产品：AI 时代用户调研的 5 步实战闭环 + 避坑指南</a>
+                                                    </div>
+                                                    <div class="meta">01-05</div>
+                                                </div>
+                                            </li>
+                                            <li class="widget-post-item--withImage js-star" data-id="41"></li>
+                                            <li class="widget-post-item--withImage">
+                                                <div class="img">
+                                                    <a href="https://www.woshipm.com/pd/6320781.html" target="_blank" title="货代SaaS实战：主数据与系统配置，让订单、关务、财务说同一种话">
+                                                        <img alt="货代SaaS实战：主数据与系统配置，让订单、关务、财务说同一种话" src="https://image.woshipm.com/2023/04/14/a1a50168-da9e-11ed-95a1-00163e0b5ff3.png!/both/100x60">
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">
+                                                        <a href="https://www.woshipm.com/pd/6320781.html" target="_blank" title="货代SaaS实战：主数据与系统配置，让订单、关务、财务说同一种话">货代SaaS实战：主数据与系统配置，让订单、关务、财务说同一种话</a>
+                                                    </div>
+                                                    <div class="meta">01-09</div>
+                                                </div>
+                                            </li>
+                                            <li class="widget-post-item--withImage">
+                                                <div class="img">
+                                                    <a href="https://www.woshipm.com/ai/6319779.html" target="_blank" title="抛弃“死”知识库！我用大模型+联网搜索，打造了一个实时更新的“政策捕手”—— 惠企服务指导大师">
+                                                        <img alt="抛弃“死”知识库！我用大模型+联网搜索，打造了一个实时更新的“政策捕手”—— 惠企服务指导大师" src="https://image.woshipm.com/2023/04/13/280f3eba-d9de-11ed-8fc2-00163e0b5ff3.jpg!/both/100x60">
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">
+                                                        <a href="https://www.woshipm.com/ai/6319779.html" target="_blank" title="抛弃“死”知识库！我用大模型+联网搜索，打造了一个实时更新的“政策捕手”—— 惠企服务指导大师">抛弃“死”知识库！我用大模型+联网搜索，打造了一个实时更新的“政策捕手”—— 惠企服务指导大师</a>
+                                                    </div>
+                                                    <div class="meta">01-07</div>
+                                                </div>
+                                            </li>
+                                            <li class="widget-post-item--withImage">
+                                                <div class="img">
+                                                    <a href="https://www.woshipm.com/share/6318218.html" target="_blank" title="用腾讯元器打造政策解读&#8221;智囊团&#8221;：让复杂政策5分钟生成企业专属落地方案">
+                                                        <img alt="用腾讯元器打造政策解读&#8221;智囊团&#8221;：让复杂政策5分钟生成企业专属落地方案" src="https://image.woshipm.com/2023/04/13/f642ff6a-d9de-11ed-bd5e-00163e0b5ff3.jpg!/both/100x60">
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">
+                                                        <a href="https://www.woshipm.com/share/6318218.html" target="_blank" title="用腾讯元器打造政策解读&#8221;智囊团&#8221;：让复杂政策5分钟生成企业专属落地方案">用腾讯元器打造政策解读 &#8221;智囊团 &#8221;：让复杂政策5分钟生成企业专属落地方案</a>
+                                                    </div>
+                                                    <div class="meta">01-06</div>
+                                                </div>
+                                            </li>
+                                            <li class="widget-post-item--withImage">
+                                                <div class="img">
+                                                    <a href="https://www.woshipm.com/operate/6317715.html" target="_blank" title="想做自媒体赚钱？请先忘记“爆款”，搭建好这6层认知逻辑">
+                                                        <img alt="想做自媒体赚钱？请先忘记“爆款”，搭建好这6层认知逻辑" src="https://image.woshipm.com/2024/03/08/8de249f6-dd31-11ee-9846-00163e142b65.png!/both/100x60">
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">
+                                                        <a href="https://www.woshipm.com/operate/6317715.html" target="_blank" title="想做自媒体赚钱？请先忘记“爆款”，搭建好这6层认知逻辑">想做自媒体赚钱？请先忘记“爆款”，搭建好这6层认知逻辑</a>
+                                                    </div>
+                                                    <div class="meta">01-05</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="widget widget-rich js-star" data-id="39"></div>
+                                <div class="widget widget-rich js-star" data-id="40"></div>
+                                <widget-question-card></widget-question-card>
+                                <div class="widget widget-rich fixed-sidebar-id js-star" data-id="27"></div>
+                                <div class="widget u-backgroundColorWhite">
+                                    <div class="inner">
+                                        <div class="widget--tocTitle">文章导航</div>
+                                        <div class="widget--content">
+                                            <ul class="widget--toc">
+                                                <li class="current">
+                                                    <a href="#toc-1">一、为什么要做埋点管理系统？</a>
+                                                </li>
+                                                <li class="current">
+                                                    <a href="#toc-2">二、埋点管理系统是什么？</a>
+                                                </li>
+                                                <li class="current">
+                                                    <a href="#toc-3">三、如何设计埋点管理系统？</a>
+                                                </li>
+                                                <li class="current">
+                                                    <a href="#toc-4">四、写在最后</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+            <footer class="site-footer">
+                <div class="container u-flex footer-sections">
+                    <section class="info-section">
+                        <div class="footer-title">关于</div>
+                        人人都是产品经理（woshipm.com）是以产品经理、运营为核心的学习、交流、分享平台，集媒体、培训、社群为一体，全方位服务产品人和运营人，成立12年举办在线讲座1000+期，线下分享会500+场，产品经理大会、运营大会50+场，覆盖北上广深杭成都等20个城市，在行业有较高的影响力和知名度。平台聚集了众多BAT美团京东滴滴360小米网易等知名互联网公司产品总监和运营总监，他们在这里与你一起成长。
+            
+                    </section>
+                    <section class="partner-section">
+                        <div class="footer-title">合作伙伴</div>
+                        <ul class="blue-pic-ul">
+                            <li>
+                                <a href="https://www.qidianla.com?woshipm" title="起点课堂" target="_blank">
+                                    <img src="https://image.woshipm.com/wp-files/2021/10/zUwm4IYjmoiV63Kk9aKQ.png" alt="起点课堂" title="起点课堂">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://36kr.com/" target="_blank">
+                                    <img src="https://image.yunyingpai.com/wp/2021/12/wyRAfH2rXJha57p06bbQ.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.geetest.com/?woshipm" target="_blank">
+                                    <img src="https://image.woshipm.com/wp-files/2020/05/zHiqREB7rkGZsC6rFerJ.png" alt="极验验证">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.zhisheji.com/?woshipm" title="致设计" target="_blank">
+                                    <img src="https://image.woshipm.com/wp-files/2020/05/k7Gf25a7GdaoRNLLogCo.png" alt="致设计" title="致设计">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.polyv.net/?-cpjl" target="_blank">
+                                    <img src="https://image.woshipm.com/wp-files/2020/05/KZTBx2R2UyR2k96mHpa4.png" alt="保利威">
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="footer-title">链接</div>
+                        <nav class="footer-nav">
+                            <ul>
+                                <li>
+                                    <a href="https://www.woshipm.com/policy" target="_blank">隐私政策</a>
+                                </li>
+                                <li>
+                                    <a href="/it/1010671.html" target="_blank">投稿须知</a>
+                                </li>
+                                <li>
+                                    <a href="https://wen.woshipm.com/question/detail/omkf.html" target="_blank">意见反馈</a>
+                                </li>
+                                <li>
+                                    <a href="https://doc.weixin.qq.com/doc/w3_ALsAdwZgAO8uhueZ8ahRse75jgAJm?scode=AGsAywdaAA0wPabVgMAYgAZgbwAOM" target="_blank">帮助中心</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </section>
+                    <section class="qr-section">
+                        <div class="qr-section--item">
+                            <img src="//image.woshipm.com/wp-files/2020/06/cKMzCQWucvwdFhHVeoib.jpeg" alt="公众号">
+                            <p>公众号</p>
+                        </div>
+                        <div class="qr-section--item">
+                            <img src="//image.woshipm.com/wp-files/2020/06/PAVQDSOr3b6NRnHyqAVy.jpeg" alt="视频号">
+                            <p>视频号</p>
+                        </div>
+                    </section>
+                </div>
+                <div class="copyright">
+                    <div class="container">
+                        <ul class="footer--links">
+                            <li>友情链接</li>
+                            <li>
+                                <a href="https://pm265.com" target="_blank">PM265</a>
+                            </li>
+                            <li>
+                                <a href="https://www.pmbaobao.com/" target="_blank">产品经理导航</a>
+                            </li>
+                            <li>
+                                <a href="https://www.qidianla.com/" target="_blank">起点课堂</a>
+                            </li>
+                            <li>
+                                <a href="http://www.zbj.com/" target="_blank">猪八戒网</a>
+                            </li>
+                            <li>
+                                <a href="https://www.cjol.com/" target="_blank">人才热线</a>
+                            </li>
+                            <li>
+                                <a href="https://www.huoban.com" target="_blank">伙伴云表格</a>
+                            </li>
+                            <li>
+                                <a href="https://dun.163.com/" target="_blank">网易易盾</a>
+                            </li>
+                            <li>
+                                <a href="https://www.getui.com/cn/" target="_blank">个推</a>
+                            </li>
+                            <li>
+                                <a href="https://www.umeng.com/" target="_blank">友盟+</a>
+                            </li>
+                            <li>
+                                <a href="https://www.liangcang.cc/" title="粮仓企业微信管家" target="_blank">粮仓</a>
+                            </li>
+                            <li>
+                                <a href="https://www.cyzone.cn/?woshipm" target="_blank">创业邦</a>
+                            </li>
+                            <li>
+                                <a href="https://www.mrbaogao.com/" title="行业报告下载" target="_blank">每日报告</a>
+                            </li>
+                            <li>
+                                <a href="https://www.niaogebiji.com/" target="_blank">鸟哥笔记</a>
+                            </li>
+                            <li>
+                                <a href="https://www.imooc.com/" title="慕课网" target="_blank">慕课网</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="container u-flex">
+                        <div class="infoleft">
+                            旗下品牌: <a target="_blank" href="https://www.qidianla.com/">起点课堂</a>
+                            | <a target="_blank" href="https://www.yunyingpai.com/">运营派</a>
+                            | <a target="_blank" href="https://www.liangcang.cc">粮仓企微管家</a>
+                            <br>
+                            ©2010-2024 - 人人都是产品经理 - <a target="_blank" href="https://beian.miit.gov.cn">粤ICP备14037330号</a>
+                            -<a target="_blank" href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502001309">粤公网安备 44030502001309号</a>
+                            <br>
+                            <a target="_blank" href="https://static.qidianla.com/Audio-TVLicense.jpg">广播电视节目制作经营许可证（粤）字第03109号</a>
+                            <a href="https://dxzhgl.miit.gov.cn/dxxzsp/xkz/xkzgl/resource/qiyesearch.jsp?num=深圳聚力创想信息科技有限公司&type=xuke" target="_blank">增值电信业务经营许可证粤B2-20190788</a>
+                            版权所有 © 深圳聚力创想信息科技有限公司
+                
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <transition name="component-fade">
+                <overlay-search v-if="searchActive"></overlay-search>
+            </transition>
+            <login-overlay v-if="showLogin" :showLogin="showLogin" @closeloginchild="closelogin"></login-overlay>
+            <event-overlay v-if="eventOverlay" :overlay="overlay" @eventclose="eventOverlayClose"></event-overlay>
+            <online-overlay v-if="onlineOverlay" :overlay="online" @eventclose="onlineOverlayClose"></online-overlay>
+        </div>
+        <div class="js-star" data-id="25" style="position:fixed;bottom:100px;right:20px;width:80px;z-index:100"></div>
+        <script type="speculationrules">
+            {
+                "prefetch": [
+                    {
+                        "source": "document",
+                        "where": {
+                            "and": [
+                                {
+                                    "href_matches": "\/*"
+                                },
+                                {
+                                    "not": {
+                                        "href_matches": [
+                                            "\/wp-*.php",
+                                            "\/wp-admin\/*",
+                                            "\/wp-content\/uploads\/*",
+                                            "\/wp-content\/*",
+                                            "\/wp-content\/plugins\/*",
+                                            "\/wp-content\/themes\/Hannah\/*",
+                                            "\/*\\?(.+)"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "not": {
+                                        "selector_matches": "a[rel~=\"nofollow\"]"
+                                    }
+                                },
+                                {
+                                    "not": {
+                                        "selector_matches": ".no-prefetch, .no-prefetch a"
+                                    }
+                                }
+                            ]
+                        },
+                        "eagerness": "conservative"
+                    }
+                ]
+            }</script>
+        <script type="text/javascript" src="//image.woshipm.com/fp/js/swiper-bundle.min.js?ver=6.0.12" id="swipper-js"></script>
+        <script type="text/javascript" src="//image.woshipm.com/fp/js/html2canvas.min.js?ver=6.0.12" id="html2canvas-js"></script>
+        <script type="text/javascript" src="//image.woshipm.com/fp/js/require-v1.0.7.js?ver=6.0.12" id="vue-js"></script>
+        <script type="text/javascript" src="//image.woshipm.com/kan/js/comment-reply.min.js?ver=6.0.12" id="cp-js"></script>
+        <script type="text/javascript" id="misc-js-extra">
+            /* <![CDATA[ */
+            var PURE = {
+                "ajax_url": "https:\/\/www.woshipm.com\/wp-admin\/admin-ajax.php",
+                "restapi": "https:\/\/www.woshipm.com\/__api\/",
+                "nonce": "50a6d49628",
+                "home_url": "https:\/\/www.woshipm.com",
+                "is_user_logged_in": "",
+                "is_singular": "1",
+                "is_home": "",
+                "is_author": "",
+                "id": "5107308",
+                "is_bookmark": "",
+                "is_posts": "",
+                "is_reward": "",
+                "is_comment": "",
+                "is_answer": "",
+                "is_event": "",
+                "is_subposts": "",
+                "is_sub": "",
+                "is_writing": "",
+                "token": "",
+                "secret": "",
+                "user_id": "0",
+                "is_recuser": "",
+                "is_hotposts": "",
+                "is_setting": "",
+                "logout": "https:\/\/passport.woshipm.com\/user\/exit.html?FS=PM&REDIRECT=http:\/\/www.woshipm.com\/data-analysis\/5107308.html&_protocol=http",
+                "production": "1",
+                "is_views": "",
+                "post_title": "\u5982\u4f55\u8bbe\u8ba1\u51fa\u4e00\u4e2a\u5b9e\u7528\u9ad8\u6548\u7684\u57cb\u70b9\u7ba1\u7406\u7cfb\u7edf\uff1f",
+                "is_adpost": "",
+                "jltoken": "",
+                "is_preview": ""
+            };
+            /* ]]> */
+        </script>
+        <script type="text/javascript" src="//image.woshipm.com/fp/js/all.bundle.js?ver=6.0.12" id="misc-js"></script>
+        <script>
+            var UID = PURE.user_id;
+        </script>
+        <script type="text/javascript" src="https://dts.woshipm.com/dtsReport/pm_pc_dts_data.js?t=1222222222"></script>
+        <div class="u-hide">
+            <script type="text/javascript">
+                var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fb85cbcc76e92e3fd79be8f2fed0f504f' type='text/javascript'%3E%3C/script%3E"));
+            </script>
+        </div>
+    </body>
+</html>

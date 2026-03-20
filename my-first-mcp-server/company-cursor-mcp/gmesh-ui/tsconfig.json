@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "strict": true,
+      "declaration": true,
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "jsx": "react",
+      "baseUrl": "./",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "target": "ES2019",
+      "paths": {
+        "@/*": ["./src/*"],
+        "@services/*": ["src/services/*"],
+        "@components/*": ["src/components/*"],
+      }
+    },
+    "include": ["src/**/*"],
+    "exclude": [
+      "node_modules",
+      "storybook-static",
+      "src/decorators",
+    ]
+  }
+  

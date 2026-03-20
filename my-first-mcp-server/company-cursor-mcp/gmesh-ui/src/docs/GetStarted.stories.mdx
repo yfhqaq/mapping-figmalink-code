@@ -1,0 +1,72 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="About/快速开始" />
+
+# 快速开始
+
+### 1. 安装与配置
+
+```bash
+pnpm add @spotter/ui
+```
+
+### 2. 配置 `Provider`
+
+```tsx
+import { SptComponentProvider } from '@spotter/ui';
+import { spotterRouter } from '@app/infra/router';
+
+ReactDOM.render(
+  <SptComponentProvider routes={spotterRouter.getRoutes()}>
+    <App />
+  </SptComponentProvider>,
+  document.getElementById('root'),
+);
+```
+- `SptComponentProvider` - 主要用于提供组件库内部的语言、desgin tokens的配置, 以及为部分路由依赖的组件提供路由
+
+### 3. 基础用法
+    
+```tsx
+import { useStore } from '@client/app/store';
+import { SptPageContainer, SptTable } from '@spotter/ui';
+import { SptProColumns } from '@client/app/infra/customValueType';
+import { GetPageRetType } from '@spotter/app-client-toolkit';
+import { FC } from 'react';
+
+export const Page: FC = () => {
+    const { queryPage } = useStore('store');
+    const columns: SptProColumns<GetPageRetType<typeof queryPage>>[] = [
+        {
+            title: 'ID',
+            dataIndex: 'id',
+        },
+        {
+            title: '名称',
+            dataIndex: 'name',
+        },
+    ];
+
+    return (
+        <SptPageContainer>
+            <SptTable
+                columns={columns}
+                rowKey="id"
+                request={({ current, pageSize }) => {
+                    const { data: res } = await queryPage({
+                        currentPage: current,
+                        pageSize,
+                    })
+
+                    return {
+                        success: true,
+                        total: res?.totalNum,
+                        data: res?.data,
+                    }
+                }}
+            />
+        </SptPageContainer>
+    );
+
+}
+```

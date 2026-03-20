@@ -1,0 +1,30 @@
+{
+  "name": "@spotter/ui-server",
+  "version": "1.0.0-alpha.0",
+  "description": "spotter ui server utils",
+  "main": "index.js",
+  "repository": {
+      "type": "git",
+      "url": "https://codeup.aliyun.com/spotter/spotter/ued/atlas",
+      "directory": "https://codeup.aliyun.com/spotter/spotter/ued/atlas/blob/master/spotter-ui-server"
+  },
+  "scripts": {
+    "build": "echo 'pass build'"
+},
+  "readme": "https://codeup.aliyun.com/spotter/spotter/ued/atlas/blob/master/spotter-ui-server/README.md",
+  "homepage": "https://codeup.aliyun.com/spotter/spotter/ued/atlas/blob/master/spotter-ui-server/",
+  "author": {
+      "name": "Naix Geng",
+      "url": "https://github.com/NNNaix",
+      "email": "nnnaix@163.com"
+  },
+  "files": [
+  ],
+  "dependencies": {
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
+    "ip": "^1.1.8",
+    "cors": "^2.8.5",
+    "ejs": "3.1.8"
+  }
+}

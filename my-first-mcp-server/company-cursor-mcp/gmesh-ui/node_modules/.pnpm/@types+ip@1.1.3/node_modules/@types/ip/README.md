@@ -1,0 +1,15 @@
+# Installation
+> `npm install --save @types/ip`
+
+# Summary
+This package contains type definitions for ip (https://github.com/indutny/node-ip).
+
+# Details
+Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ip.
+
+### Additional Details
+ * Last updated: Tue, 07 Nov 2023 03:09:37 GMT
+ * Dependencies: [@types/node](https://npmjs.com/package/@types/node)
+
+# Credits
+These definitions were written by [Peter Harris](https://github.com/codeanimal), and [BendingBender](https://github.com/BendingBender).

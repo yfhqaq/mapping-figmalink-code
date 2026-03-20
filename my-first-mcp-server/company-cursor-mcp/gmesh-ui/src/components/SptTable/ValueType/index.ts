@@ -1,0 +1,18 @@
+export type ValueTypes =
+    | 'company'
+    | 'companyCode'
+    | 'storage'
+    | 'sptDateMonth'
+    | 'sptDateDay'
+    | 'dateMinute'
+    | 'dateSecond'
+    | 'dateDayRange'
+    | 'dateMonthRange'
+    | 'dateDayUTC8'
+    | 'dateTimeUTC8'
+    | 'dateMinuteUTC8'
+    | 'currency'
+    | 'popoverList'
+    | 'svcAccount'
+    | 'number'
+    | 'vendorCode';

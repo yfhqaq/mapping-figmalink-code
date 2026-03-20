@@ -1,0 +1,86 @@
+{
+  "id": "child",
+  "name": "child",
+  "metaData": {
+    "name": "child",
+    "type": "app",
+    "buildInfo": {
+      "buildVersion": "1.0.0",
+      "buildName": "child"
+    },
+    "remoteEntry": {
+      "name": "",
+      "path": "",
+      "type": "global"
+    },
+    "types": {
+      "path": "",
+      "name": "",
+      "zip": ".",
+      "api": "."
+    },
+    "globalName": "child",
+    "pluginVersion": "0.15.0",
+    "prefetchInterface": false,
+    "publicPath": "/"
+  },
+  "shared": [
+    {
+      "singleton": true,
+      "requiredVersion": "^18.3.1",
+      "shareScope": "default",
+      "name": "react",
+      "version": "18.3.1",
+      "eager": false,
+      "id": "child:react",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "static/js/async/366.bf53f439.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": []
+    },
+    {
+      "singleton": true,
+      "requiredVersion": "^18.3.1",
+      "shareScope": "default",
+      "name": "react-dom",
+      "version": "*",
+      "eager": false,
+      "id": "child:react-dom",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "static/js/async/389.af2f4ef9.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": []
+    }
+  ],
+  "remotes": [
+    {
+      "alias": "provider",
+      "consumingFederationContainerName": "child",
+      "federationContainerName": "rslib_provider",
+      "moduleName": ".",
+      "usedIn": [
+        "src/bootstrap.tsx + 2 modules"
+      ],
+      "entry": "http://localhost:9000/mf-manifest.json"
+    }
+  ],
+  "exposes": []
+}

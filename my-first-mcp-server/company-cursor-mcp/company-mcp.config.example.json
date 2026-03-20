@@ -1,0 +1,22 @@
+{
+  "companyName": "Spotter",
+  "figma": { "specPaths": [] },
+  "componentLibrary": {
+    "repoRoot": "/Users/yangfuhua/studyspace/my-first-mcp-server/company-cursor-mcp/gmesh-ui"
+  },
+  "docs": { "paths": [] },
+  "rag": {
+    "enabled": false,
+    "qdrant": {
+      "url": "http://localhost:6333",
+      "collection": "company-cursor-mcp"
+    },
+    "embedding": {
+      "provider": "stub",
+      "model": "Xenova/all-MiniLM-L6-v2",
+      "localFilesOnly": false,
+      "cacheDir": "/ABSOLUTE/PATH/to/model-cache",
+      "dimension": 8
+    }
+  }
+}

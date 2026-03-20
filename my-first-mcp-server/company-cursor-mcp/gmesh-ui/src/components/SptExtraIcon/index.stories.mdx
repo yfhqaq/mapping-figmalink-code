@@ -1,0 +1,52 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import SptExtraIcon from "."
+import { PlayCircleFilled } from '@ant-design/icons';
+
+<Meta title="Components/图标/SptExtraIcon" />
+
+# ExtraIcon 组件
+
+更快捷的使用默认的图标颜色
+
+## 图标颜色
+
+### Default
+<Canvas>
+    <SptExtraIcon type="default" />
+</Canvas>
+
+
+### Info
+<Canvas>
+    <SptExtraIcon type="info" />
+</Canvas>
+
+
+### Warning
+<Canvas>
+    <SptExtraIcon type="warning" />
+</Canvas>
+
+### Danger
+<Canvas>
+    <SptExtraIcon type="danger" />
+</Canvas>
+
+### Success
+<Canvas>
+    <SptExtraIcon type="success" />
+</Canvas>
+
+## 自定义图标
+
+### PlayCircleFilled
+<Canvas>
+    <SptExtraIcon type="info" icon={<PlayCircleFilled />} />
+</Canvas>
+
+```tsx
+import { SptExtraIcon } from '@spotter/ui';
+import { PlayCircleFilled } from '@ant-design/icons';
+
+<SptExtraIcon type="info" icon={<PlayCircleFilled />} />
+```

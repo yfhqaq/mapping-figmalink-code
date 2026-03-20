@@ -1,0 +1,153 @@
+{
+  "configs": [
+    {
+      "automock": false,
+      "cache": true,
+      "cacheDirectory": "/private/var/folders/zw/pt8f1ht9439cmzwl_vn1tw700000gn/T/jest_dx",
+      "clearMocks": true,
+      "collectCoverageFrom": [],
+      "coverageDirectory": "/Users/yangfuhua/studyspace/studyPython/test_demo/coverage",
+      "coveragePathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "cwd": "/Users/yangfuhua/studyspace/studyPython/test_demo",
+      "detectLeaks": false,
+      "detectOpenHandles": false,
+      "errorOnDeprecated": false,
+      "extensionsToTreatAsEsm": [],
+      "fakeTimers": {
+        "enableGlobally": false
+      },
+      "forceCoverageMatch": [],
+      "globals": {},
+      "haste": {
+        "computeSha1": false,
+        "enableSymlinks": false,
+        "forceNodeFilesystemAPI": true,
+        "throwOnModuleCollision": false
+      },
+      "id": "f953a2bdf3b5560ff2bf380b77a7744a",
+      "injectGlobals": true,
+      "moduleDirectories": [
+        "node_modules"
+      ],
+      "moduleFileExtensions": [
+        "js",
+        "mjs",
+        "cjs",
+        "jsx",
+        "ts",
+        "tsx",
+        "json",
+        "node"
+      ],
+      "moduleNameMapper": [
+        [
+          "\\.(css|less|scss|sass)$",
+          "identity-obj-proxy"
+        ]
+      ],
+      "modulePathIgnorePatterns": [],
+      "openHandlesTimeout": 1000,
+      "prettierPath": "prettier",
+      "resetMocks": false,
+      "resetModules": false,
+      "restoreMocks": false,
+      "rootDir": "/Users/yangfuhua/studyspace/studyPython/test_demo",
+      "roots": [
+        "/Users/yangfuhua/studyspace/studyPython/test_demo"
+      ],
+      "runner": "/Users/yangfuhua/studyspace/studyPython/test_demo/node_modules/.pnpm/jest-runner@29.7.0/node_modules/jest-runner/build/index.js",
+      "sandboxInjectedGlobals": [],
+      "setupFiles": [],
+      "setupFilesAfterEnv": [
+        "/Users/yangfuhua/studyspace/studyPython/test_demo/jest-dom-setup.js"
+      ],
+      "skipFilter": false,
+      "slowTestThreshold": 5,
+      "snapshotFormat": {
+        "escapeString": false,
+        "printBasicPrototype": false
+      },
+      "snapshotSerializers": [],
+      "testEnvironment": "/Users/yangfuhua/studyspace/studyPython/test_demo/node_modules/.pnpm/jest-environment-jsdom@29.7.0/node_modules/jest-environment-jsdom/build/index.js",
+      "testEnvironmentOptions": {},
+      "testLocationInResults": false,
+      "testMatch": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[tj]s?(x)"
+      ],
+      "testPathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "testRegex": [],
+      "testRunner": "/Users/yangfuhua/studyspace/studyPython/test_demo/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/runner.js",
+      "transform": [
+        [
+          "^.+\\.(ts|tsx|js|jsx)$",
+          "/Users/yangfuhua/studyspace/studyPython/test_demo/node_modules/.pnpm/babel-jest@29.7.0_@babel+core@7.28.5/node_modules/babel-jest/build/index.js",
+          {}
+        ]
+      ],
+      "transformIgnorePatterns": [
+        "/node_modules/",
+        "\\.pnp\\.[^\\/]+$"
+      ],
+      "watchPathIgnorePatterns": []
+    }
+  ],
+  "globalConfig": {
+    "bail": 0,
+    "changedFilesWithAncestor": false,
+    "ci": false,
+    "collectCoverage": false,
+    "collectCoverageFrom": [],
+    "coverageDirectory": "/Users/yangfuhua/studyspace/studyPython/test_demo/coverage",
+    "coverageProvider": "v8",
+    "coverageReporters": [
+      "json",
+      "text",
+      "lcov",
+      "clover"
+    ],
+    "detectLeaks": false,
+    "detectOpenHandles": false,
+    "errorOnDeprecated": false,
+    "expand": false,
+    "findRelatedTests": false,
+    "forceExit": false,
+    "json": false,
+    "lastCommit": false,
+    "listTests": false,
+    "logHeapUsage": false,
+    "maxConcurrency": 5,
+    "maxWorkers": 7,
+    "noStackTrace": false,
+    "nonFlagArgs": [],
+    "notify": false,
+    "notifyMode": "failure-change",
+    "onlyChanged": false,
+    "onlyFailures": false,
+    "openHandlesTimeout": 1000,
+    "passWithNoTests": false,
+    "projects": [],
+    "rootDir": "/Users/yangfuhua/studyspace/studyPython/test_demo",
+    "runTestsByPath": false,
+    "seed": 1424489222,
+    "skipFilter": false,
+    "snapshotFormat": {
+      "escapeString": false,
+      "printBasicPrototype": false
+    },
+    "testFailureExitCode": 1,
+    "testPathPattern": "",
+    "testSequencer": "/Users/yangfuhua/studyspace/studyPython/test_demo/node_modules/.pnpm/@jest+test-sequencer@29.7.0/node_modules/@jest/test-sequencer/build/index.js",
+    "updateSnapshot": "new",
+    "useStderr": false,
+    "watch": false,
+    "watchAll": false,
+    "watchman": true,
+    "workerThreads": false
+  },
+  "version": "29.7.0"
+}

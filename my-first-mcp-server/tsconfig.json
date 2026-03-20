@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "rootDir": "./",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "lib": ["es2020", "ESNext", "dom"],
+    "typeRoots": ["./node_modules/@types", "./node_modules"],
+    "types": ["@modelcontextprotocol/sdk"],
+    "paths": {
+      "@modelcontextprotocol/sdk/server/mcp": ["./node_modules/@modelcontextprotocol/sdk/dist/esm/server/mcp.d.ts"],
+      "@modelcontextprotocol/sdk/server/stdio": ["./node_modules/@modelcontextprotocol/sdk/dist/esm/server/stdio.d.ts"]
+    }
+  },
+  "include": ["server.ts"],
+  "exclude": ["node_modules"]
+}

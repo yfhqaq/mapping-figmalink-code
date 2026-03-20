@@ -1,0 +1,8 @@
+HTTP/2 401 
+date: Fri, 16 Jan 2026 10:30:46 GMT
+content-type: application/json; charset=utf-8
+content-length: 37
+vary: Origin
+access-control-allow-credentials: true
+access-control-expose-headers: Grpc-Status, Grpc-Message, Grpc-Status-Details-Bin, Content-Encoding, Connect-Content-Encoding, traceparent, backend-traceparent, x-amzn-trace-id, x-request-id
+

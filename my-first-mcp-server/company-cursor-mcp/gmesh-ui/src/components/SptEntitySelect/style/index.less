@@ -1,0 +1,47 @@
+.spotter-select-with-inner-label {
+    width: 100%;
+    .ant-select-selector {
+        padding: 1px 11px;
+
+        .ant-select-selection-search {
+            display: flex;
+            margin: 0;
+
+            .ant-select-selection-search-input {
+                flex-grow: 1;
+                width: 0;
+            }
+
+            &::before {
+                display: flex;
+                align-items: center;
+                padding-right: 8px;
+                font-weight: 400;
+                white-space: nowrap;
+                opacity: 0;
+                content: attr(data-spotter-select-inner-label) '';
+            }
+        }
+
+        .ant-select-selection-placeholder {
+            &::before {
+                display: inline-flex;
+                align-items: center;
+                font-weight: 400;
+                white-space: nowrap;
+                opacity: 0;
+                content: attr(data-spotter-select-inner-label) '';
+            }
+        }
+
+        &::before {
+            display: inline-flex;
+            align-items: center;
+            padding-right: 8px;
+            color: var(--color-text-tertiary);
+            font-weight: 400;
+            white-space: nowrap;
+            content: attr(data-spotter-select-inner-label) '';
+        }
+    }
+}

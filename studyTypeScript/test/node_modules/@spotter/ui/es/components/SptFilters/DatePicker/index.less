@@ -1,0 +1,13 @@
+.spotter-filter-date-picker-with-inner-label {
+    .ant-picker-input {
+        &::before {
+            display: inline-flex;
+            align-items: center;
+            padding-right: 8px;
+            color: #79848f;
+            font-weight: 400;
+            white-space: nowrap;
+            content: attr(data-spotter-filter-date-picker-inner-label) '';
+        }
+    }
+}

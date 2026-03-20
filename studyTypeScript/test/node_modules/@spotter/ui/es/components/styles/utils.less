@@ -1,0 +1,31 @@
+.scrollbar(@scrollBarSize) {
+    ::-webkit-scrollbar {
+        width: @scrollBarSize;
+        height: @scrollBarSize;
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgb(108 122 121 / 50%);
+        border-radius: 1ex;
+
+        &:hover {
+            background: #999 !important;
+        }
+    }
+
+    ::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    scrollbar-color: rgb(108 122 121 / 50%) transparent;
+
+    ::-webkit-scrollbar-track {
+        padding: 0 2px;
+        border-radius: 4px;
+    }
+}

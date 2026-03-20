@@ -1,0 +1,36 @@
+import { Meta, Title, IconGallery, IconItem, Canvas } from '@storybook/blocks';
+import iconfont from './style/iconfont/iconfont.json';
+import SptIcon from '.';
+
+<Meta title="Components/图标/SptIcon"  />
+
+# 基本用法
+```tsx
+import React from 'react';
+import { SptIcon } from '@spotter/ui';
+
+export const IconDemo: React.FC = () => {
+  return (
+    <SptIcon type="sptfont-send" />
+  )
+}
+```
+
+```tsx
+<SptIcon type="sptfont-send" />
+```
+
+# 单色图标
+
+<IconGallery>
+    {
+        iconfont.glyphs.map(item => (
+            <IconItem name={`${iconfont.css_prefix_text}${item.font_class}`}>
+                <SptIcon type={`${iconfont.css_prefix_text}${item.font_class}`} />
+            </IconItem>
+        ))
+    }
+</IconGallery>
+
+# 多色图标
+待补充

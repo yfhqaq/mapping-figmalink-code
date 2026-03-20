@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "pdfjs-dist": "3.6.172",
+    "react-pdf": "^9.1.1"
+  }
+}

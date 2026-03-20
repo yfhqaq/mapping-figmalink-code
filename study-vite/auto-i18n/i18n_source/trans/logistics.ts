@@ -1,0 +1,16 @@
+export default {
+    "logistics.3_a_single_order_number_should_have_a_mi": "3.单个单号，最小不可小于5位，最大不可大于50位。",
+    "logistics.BOL_signature": "BOL签单",
+    "logistics._2": "物流单子状态",
+    "logistics._2_1": "待 Spotter 确认",
+    "logistics._3": "预估运费（美元）",
+    "logistics._3_1": "40英尺标准柜  ",
+    "logistics._4": "签名",
+    "logistics._4_1": "WMS 同步中",
+    "logistics._5": "运输保险",
+    "logistics._5_1": "WMS 同步失败",
+    "logistics._6": "包裹规格",
+    "logistics._6_1": "WMS 取消同步中",
+    "logistics._7": "操作成功，请等待反馈",
+    "logistics.test": "测试文案",
+}
